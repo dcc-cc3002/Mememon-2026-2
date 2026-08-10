@@ -7,8 +7,8 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="E:\teaching\CC3002-memes\cc3002-project-template" />
-            <option value="E:\teaching\CC3002-memes\cc3002-project-template\project" />
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/project" />
           </set>
         </option>
         <option name="sbtVersion" value="1.12.5" />
