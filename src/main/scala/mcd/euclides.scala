@@ -1,9 +1,6 @@
 package cl.uchile.dcc
 package mcd
 
-package cl.uchile.dcc
-package mcd
-
 /*
 El siguiente import es necesario sí quieren leer números enteros desde la consola.
 Pueden leer un entero de la siguiente forma:
