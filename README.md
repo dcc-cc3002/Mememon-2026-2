@@ -16,7 +16,7 @@ Aunque el proyecto se evaluará mediante pruebas unitarias y lógica de consola 
 
 Las reglas completas del juego, las entidades requeridas y el detalle de cada entrega parcial y final pueden encontrarse en el enunciado oficial del proyecto.
 
-👉 **[Enlace al enunciado completo del proyecto] (El cuerpo docente colocará el link aquí pronto)**
+[Link de ucursos del enunciado](https://www.u-cursos.cl/ingenieria/2026/2/CC3002/1/material_docente/detalle?id=10946097)
 
 ## ¿Qué se estará evaluando?
 
