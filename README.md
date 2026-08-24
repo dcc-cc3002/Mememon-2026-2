@@ -1,83 +1,79 @@
-# Tarea 0 | Entrega Final
+# Tarea 0 - Introducción a Scala y Git
 
-La idea de esta primera entrega es que se familiaricen con el lenguaje Scala, así como el manejo de Git, resolviendo un problema de programación sencillo.
+La idea de esta primera entrega es que se familiaricen con el lenguaje Scala, 
+así como el manejo de Git. La finalidad es que sean capaces de ejecutar tanto el
+_front-end_ (opcional) como el _back-end_ del proyecto.
 
-## Problema: Encontrar el Máximo Común Divisor (mcd) entre dos números dados.
+## GameController
 
-El **Máximo Común Divisor (MCD)** de dos números enteros es el mayor número entero positivo que divide a ambos sin dejar residuo. Por ejemplo, el MCD de 12 y 8 es 4, ya que 4 es el mayor número que divide tanto a 12 como a 8.
+Esta entrega consiste en crear de manera _hard-coded_ un estado de juego inicial
+para que después lo puedan visualizar con el _front-end_.
 
-Para calcularlo, utilizaremos el **algoritmo de Euclides**, que se basa en la siguiente observación:
+Dentro del repositorio se encuentra un archivo llamado GameController y otro
+IGameController. El segundo corresponde a la **interface** o **trait** del
+primero y cumple con ser una pauta de lo que deben implementar para esta
+entrega.
 
-> mcd(a, b) = mcd(b, a mod b)
+GameController cuenta con una implementación muy básica de ejemplo, donde se
+incluye una unidad del juego y un panel o casilla. Ustedes deben recrear el
+siguiente escenario:
 
-Es decir, el MCD de dos números es igual al MCD del segundo número y el resto de dividir el primero por el segundo. Cuando el resto es 0, el MCD es el último divisor no nulo.
+![resultado.jpg](resultado.jpg)
 
-**Ejemplo paso a paso:** mcd(12, 8)
-- mcd(12, 8) → mcd(8, 12 mod 8) = mcd(8, 4)
-- mcd(8, 4) → mcd(4, 8 mod 4) = mcd(4, 0)
-- Como el segundo valor es 0, el MCD es **4**.
+Donde hay:
+- Tres personajes:
+   1. "Relm" cuyo id es "c1", tiene 100 puntos de "hp" y 50 de "atk".
+   2. "Setzer" cuyo id es "c2", tiene 150 puntos de "hp", 40 de "atk" y 10 de
+   "def".
+   3. "Terra" cuyo id es "c3", tiene 200 puntos de "hp", 30 de "atk", 20 de
+   "def", y 20 de "mp".
 
-### Comportamiento esperado
-
-El programa debe ser **interactivo**: pedirle al usuario dos números, calcular el MCD entre ellos utilizando el algoritmo de Euclides, mostrar el resultado, y repetir el proceso. El programa termina cuando el usuario ingresa **0** como primer número.
-
-### Ejemplo de ejecución
-
-```
-Ingrese el primer número (0 para salir): 12
-Ingrese el segundo número: 8
-El MCD de 12 y 8 es 4
-
-Ingrese el primer número (0 para salir): 15
-Ingrese el segundo número: 5
-El MCD de 15 y 5 es 5
-
-Ingrese el primer número (0 para salir): 0
-Adiós!
-```
+- Cuatro paneles:
+   1. Panel "p1" en (1, 1) donde está Relm
+   2. Panel "p2" en (2, 1) donde está Setzer
+   3. Panel "p3" en (2, 2) donde no hay nadie
+   4. Panel "p4" en (1, 2) donde está Terra
 
 ## Git
+Para la correcta inicialización de su trabajo en este proyecto, debe realizar
+las siguientes instrucciones:
 
-Para trabajar en esta tarea, deben crear una rama llamada `entrega-final-0` a partir de `main`
+1. Seguir el enlace de *GitHub Classroom* que se les ha entregado para crear un
+repositorio privado con los archivos base del proyecto.
 
-Una vez que hayan terminado de implementar su solución, hagan commit y push de sus cambios en esa rama
+2. Clonar el repositorio en su computador. Para esto, utilice el comando
+``git clone <url>``. Una vez situado en el directorio en el que trabajará
 
-## Instrucciones de implementación
+**IMPORTANTE**: Usted debe abrir IntelliJ desde la carpeta que clonó, es decir,
+la que tenga el nombre PENDIENTE. Hacerlo desde la carpeta que contiene a esta
+no permitirá el correcto funcionamiento de la aplicación.
 
-El archivo que deben editar es:
+3. Crear una rama llamada ``entrega-final-0``.
 
-```
-src/main/scala/mcd/euclides.scala
-```
+   - Para esto, utilice el comando ``git branch <branch_name>``. En este caso,
+   sería ``git branch entrega-final-0``.
+   
+   - Para que su progreso pueda ser almacenado en dicha rama (y no en la rama
+   main u otras), debe utilizar el comando ``git checkout <branch_name>``. En
+   este caso, sería ``git checkout entrega-final-0``. A esto se le conoce
+   comúnmente como "cambiarse de rama".
 
-Deben escribir su código **entre los comentarios de inicio y fin** que encontrarán en el archivo:
-
-```scala
-// Inicio de la zona donde deben editar el código
-
-// (su código va aquí)
-
-// Fin de la zona donde deben editar el código
-```
-
-Para ejecutar el programa y probar su solución, utilicen:
-
-```bash
-sbt run
-```
+*Tenga en cuenta que el cuerpo docente tiene acceso total a su repositorio.*
 
 ## Entrega
+Para subir su entrega, deberá crear un *pull request* desde la rama
+``entrega-final-0`` a la rama ``main`` llamado ``Tarea 0 - Entrega Final``.
 
-Para subir su entrega, deberán crear un **Pull Request** en GitHub desde la rama `entrega-final-0` hacia `main`, con el título **"Tarea 0 - Entrega Final"**.
+Es importante que **no hagan merge** de la rama ``entrega-final-0`` a la rama
+``main`` para que el cuerpo docente pueda revisar su *pull request*.
 
-**IMPORTANTE: No hacer merge** del Pull Request. El cuerpo docente **solo revisará** la pull request realizada.
+Por *U-Cursos* debe entregar un único archivo llamado ``entrega-final-0.txt``
+con el siguiente contenido:
 
-Entregar por **U-Cursos** un archivo llamado `entrega-final-0.txt` que contenga:
-- Su nombre completo
-- El link al Pull Request
-   
-Este es el formato que deben seguir:
-```txt
-Nombre: Perico Los Palotes (lo cambian por su nombre)
-Pull Request: https://github.com/... (completan los "..." con el resto del link)
 ```
+Nombre: <Nombre completo>
+Pull Request: <Link del pull request>
+```
+
+La realización de esta entrega es **obligatoria** y corresponde al 10% de la 
+nota de Tareas.
