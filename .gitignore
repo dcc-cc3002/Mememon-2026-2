@@ -49,6 +49,7 @@ hs_err_pid*
 .idea_modules/
 *.iml
 *.ipr
+.idea/*
 
 # --- Archivos temporales y del sistema operativo ---
 *~

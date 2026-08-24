@@ -19,6 +19,8 @@ import scala.io.StdIn.readInt
   // Inicio de la zona donde deben editar el código
 
   println("No le sé al máximo común divisor :(")
+  println("Coloque aquí su numero:")
+  val input: Int = readInt()
 
   // Fin de la zona donde deben editar el código
 }
