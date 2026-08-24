@@ -1,79 +1,33 @@
-# Tarea 0 - Introducción a Scala y Git
+# Proyecto Semestral: Final Reality Tactics
 
-La idea de esta primera entrega es que se familiaricen con el lenguaje Scala, 
-así como el manejo de Git. La finalidad es que sean capaces de ejecutar tanto el
-_front-end_ (opcional) como el _back-end_ del proyecto.
+## Descripción del Proyecto
 
-## GameController
+Este repositorio contiene la plantilla base para el proyecto semestral del curso. El objetivo principal es desarrollar una versión simplificada de un juego de combate táctico, enfocado exclusivamente en la implementación de la lógica de negocio mediante el patrón arquitectónico **Modelo-Vista-Controlador (MVC)**. 
 
-Esta entrega consiste en crear de manera _hard-coded_ un estado de juego inicial
-para que después lo puedan visualizar con el _front-end_.
+En particular, a lo largo del semestre trabajarán en la construcción del **Modelo** (las entidades del juego como personajes, armas, paneles y sus interacciones mediante acciones) y el **Controlador** (el motor lógico encargado de gestionar los turnos, flujo del juego y reglas, como `GameController`). No se implementará una Vista gráfica (frontend), por lo que todo se basará en código Scala puro.
 
-Dentro del repositorio se encuentra un archivo llamado GameController y otro
-IGameController. El segundo corresponde a la **interface** o **trait** del
-primero y cumple con ser una pauta de lo que deben implementar para esta
-entrega.
+## Referencia Visual
 
-GameController cuenta con una implementación muy básica de ejemplo, donde se
-incluye una unidad del juego y un panel o casilla. Ustedes deben recrear el
-siguiente escenario:
+Aunque el proyecto se evaluará mediante pruebas unitarias y lógica de consola sin necesidad de conectarlo a una interfaz web, aquí tienen una imagen del "front-end" conceptual del juego. Esto les servirá para hacerse una idea de cómo deberían verse estructurados lógicamente el mapa (en base a paneles) y sus unidades a lo largo de las entregas:
 
 ![resultado.jpg](resultado.jpg)
 
-Donde hay:
-- Tres personajes:
-   1. "Relm" cuyo id es "c1", tiene 100 puntos de "hp" y 50 de "atk".
-   2. "Setzer" cuyo id es "c2", tiene 150 puntos de "hp", 40 de "atk" y 10 de
-   "def".
-   3. "Terra" cuyo id es "c3", tiene 200 puntos de "hp", 30 de "atk", 20 de
-   "def", y 20 de "mp".
+## Enunciado del Proyecto
 
-- Cuatro paneles:
-   1. Panel "p1" en (1, 1) donde está Relm
-   2. Panel "p2" en (2, 1) donde está Setzer
-   3. Panel "p3" en (2, 2) donde no hay nadie
-   4. Panel "p4" en (1, 2) donde está Terra
+Las reglas completas del juego, las entidades requeridas y el detalle de cada entrega parcial y final pueden encontrarse en el enunciado oficial del proyecto.
 
-## Git
-Para la correcta inicialización de su trabajo en este proyecto, debe realizar
-las siguientes instrucciones:
+👉 **[Enlace al enunciado completo del proyecto] (El cuerpo docente colocará el link aquí pronto)**
 
-1. Seguir el enlace de *GitHub Classroom* que se les ha entregado para crear un
-repositorio privado con los archivos base del proyecto.
+## ¿Qué se estará evaluando?
 
-2. Clonar el repositorio en su computador. Para esto, utilice el comando
-``git clone <url>``. Una vez situado en el directorio en el que trabajará
+El trabajo a lo largo del semestre será evaluado principalmente en base a los siguientes tres pilares:
 
-**IMPORTANTE**: Usted debe abrir IntelliJ desde la carpeta que clonó, es decir,
-la que tenga el nombre PENDIENTE. Hacerlo desde la carpeta que contiene a esta
-no permitirá el correcto funcionamiento de la aplicación.
+1. **Diseño (50%)**: Se evaluará la calidad de su código, exigiendo que este cumpla con los principios de diseño orientado a objetos enseñados en el curso. Se espera un código extensible y con responsabilidades bien definidas.
+2. **Testing y Coverage (35%)**: Se evaluará que su código tenga pruebas automatizadas utilizando **MUnit** con una cobertura de al menos el 90% para obtener el puntaje completo. Las pruebas deben comprobar tanto los casos de uso esperados como los casos de borde (ej. fallos en restricciones de acciones).
+3. **Documentación (15%)**: Cada clase, interfaz (trait) y método público debe estar debidamente documentado usando el formato Scaladoc.
 
-3. Crear una rama llamada ``entrega-final-0``.
+## Cómo empezar
 
-   - Para esto, utilice el comando ``git branch <branch_name>``. En este caso,
-   sería ``git branch entrega-final-0``.
-   
-   - Para que su progreso pueda ser almacenado en dicha rama (y no en la rama
-   main u otras), debe utilizar el comando ``git checkout <branch_name>``. En
-   este caso, sería ``git checkout entrega-final-0``. A esto se le conoce
-   comúnmente como "cambiarse de rama".
-
-*Tenga en cuenta que el cuerpo docente tiene acceso total a su repositorio.*
-
-## Entrega
-Para subir su entrega, deberá crear un *pull request* desde la rama
-``entrega-final-0`` a la rama ``main`` llamado ``Tarea 0 - Entrega Final``.
-
-Es importante que **no hagan merge** de la rama ``entrega-final-0`` a la rama
-``main`` para que el cuerpo docente pueda revisar su *pull request*.
-
-Por *U-Cursos* debe entregar un único archivo llamado ``entrega-final-0.txt``
-con el siguiente contenido:
-
-```
-Nombre: <Nombre completo>
-Pull Request: <Link del pull request>
-```
-
-La realización de esta entrega es **obligatoria** y corresponde al 10% de la 
-nota de Tareas.
+1. Lean detenidamente el enunciado principal del proyecto.
+2. Exploren este código base. Encontrarán una clase inicial `GameController` en el paquete `controller` desde la cual podrán comenzar a articular su lógica.
+3. Asegúrense de usar herramientas de control de versiones (Git) de manera constante, documentando adecuadamente sus avances mediante *commits*.
