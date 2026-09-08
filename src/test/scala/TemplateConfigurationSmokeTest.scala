@@ -1,5 +1,9 @@
 package cl.uchile.dcc
 
+import cl.uchile.dcc.Pociones.Pocion
+import cl.uchile.dcc.Armamento.Arma
+import cl.uchile.dcc.Jugador.Jugador
+import cl.uchile.dcc.Accion._
 import munit.FunSuite
 
 import java.nio.charset.StandardCharsets
@@ -69,3 +73,13 @@ class TemplateConfigurationSmokeTest extends FunSuite:
       buildProperties.contains("sbt.version"),
       "Expected project/build.properties to declare sbt.version"
     )
+
+
+  test("Equipar arma empieza con lista vacía"):
+    val accion = new EquiparArma()
+    assert(accion.armas.isEmpty)
+
+
+  test("Consumir poción empieza con lista vacía"):
+    val accion = new ConsumirPocion()
+    assert(accion.pociones.isEmpty)
