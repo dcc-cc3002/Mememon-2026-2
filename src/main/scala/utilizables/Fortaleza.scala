@@ -1,4 +1,3 @@
 package utilizables
 
-class Fortaleza() extends Pocion:
-  override val nombre: String = "Pocion de Fortaleza"
+class Fortaleza(nombre:String) extends PocionComun(nombre)

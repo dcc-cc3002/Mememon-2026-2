@@ -1,4 +1,3 @@
 package utilizables
 
-class Curacion() extends Pocion:
-  override val nombre: String = "Pocion de curacion"
+class Curacion(nombre:String) extends PocionComun(nombre)
