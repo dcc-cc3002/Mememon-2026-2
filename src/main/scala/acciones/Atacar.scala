@@ -1,4 +1,4 @@
 package acciones
 
 
-class Atacar(override nombre:String) extends accion
+class Atacar(override val nombre:String) extends accion
