@@ -1,5 +1,9 @@
 package cl.uchile.dcc
 
+import cl.uchile.dcc.Pociones.Pocion
+import cl.uchile.dcc.Armamento.Arma
+import cl.uchile.dcc.Jugador.Jugador
+import cl.uchile.dcc.Accion._
 import munit.FunSuite
 
 import java.nio.charset.StandardCharsets

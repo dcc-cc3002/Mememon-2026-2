@@ -29,5 +29,5 @@ El trabajo a lo largo del semestre será evaluado principalmente en base a los s
 ## Cómo empezar
 
 1. Lean detenidamente el enunciado principal del proyecto.
-2. Exploren este código base. Encontrarán una clase inicial `GameController` en el paquete `controller` desde la cual podrán comenzar a articular su lógica.
+2. Exploren este código base. Encontrarán una clase inicial `GameController` en el paquete `controllerTest` desde la cual podrán comenzar a articular su lógica.
 3. Asegúrense de usar herramientas de control de versiones (Git) de manera constante, documentando adecuadamente sus avances mediante *commits*.
