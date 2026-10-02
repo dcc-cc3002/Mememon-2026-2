@@ -16,3 +16,5 @@ trait Unidad:
   var DefensePoints: Int
   var weight:Double
 
+  def BarraAccion : Double
+
