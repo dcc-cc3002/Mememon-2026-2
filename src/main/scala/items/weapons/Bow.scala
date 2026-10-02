@@ -1,6 +1,8 @@
 package cl.uchile.dcc
 package items.weapons
 
-class Bow extends AbstractWeapon {
+class Bow(name: String, atk: Int, wgt: Int, owner: Option[Character], isMagic: Boolean)
+  extends AbstractWeapon(name, atk, wgt, owner, isMagic){
+
 
 }

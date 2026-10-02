@@ -13,6 +13,9 @@ trait Character extends CharacterUnit{
   val isMagic: Boolean
   var weapon: Option[AbstractWeapon]
   var inventory: List[Item]
+  
+  
+  var actionBar: Float
 
 
 }
