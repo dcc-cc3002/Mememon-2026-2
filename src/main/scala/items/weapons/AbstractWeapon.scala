@@ -6,7 +6,7 @@ import items.AbstractItem
 abstract class AbstractWeapon(val name: String,
                      var Atk: Int,
                      val Wgt: Int,
-                     var owner: Character,
+                     var owner: Option[Character],
                      val isMagic: Boolean
                     ) extends AbstractItem {
 
