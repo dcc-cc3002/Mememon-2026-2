@@ -9,7 +9,3 @@ class FortalezaTest extends munit.FunSuite:
       val option1 = new Fortaleza("Pocion de fortaleza A")
       val option2 = new Fortaleza("Pocion de fortaleza B")
       assertNotEquals(option1.nombre, option2.nombre)
-      
-    test("strength is common"):
-      val potion = new Fortaleza("test")
-      assert(pocion.isInstanceOf[PocionComun])

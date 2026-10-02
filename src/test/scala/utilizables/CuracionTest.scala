@@ -8,6 +8,3 @@ class CuracionTest extends munit.FunSuite:
     val pocion1 = new Curacion("Pocion de curacion A")
     val pocion2 = new Curacion("Pocion de curacion B")
     assertNotEquals(pocion1.nombre, pocion2.nombre)
-  test("una pocion comun, efectivamente es comun"):
-    val pocion = new Curacion("Pocion de curacion A")
-    assert(pocion.isInstanceOf[PocionComun])

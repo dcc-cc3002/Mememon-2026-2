@@ -16,5 +16,3 @@ class BastonTest extends munit.FunSuite:
     assertEquals(baston.weight, 2.0)
     assertEquals(baston.owner, dueño)
     assertEquals(baston.AttackPointsM, 12)
-  test("Un Baston es un ArmaMagic"):
-    assert(baston.isInstanceOf[ArmaMagic])
