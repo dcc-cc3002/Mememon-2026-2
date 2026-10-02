@@ -13,7 +13,7 @@ class ArqueroTest extends munit.FunSuite:
     assertEquals(arquero.weight, 60.0)
 
   test("Un Arquero nuevo no tiene arma equipada"):
-    assertEquals(arquero.Slot_Arma, None)
+    assertEquals(arquero.SlotArma, None)
 
   test("Un Arquero nuevo tiene el inventario vacío"):
     assert(arquero.inventarioUtilizables.isEmpty)

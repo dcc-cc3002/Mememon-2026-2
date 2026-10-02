@@ -13,7 +13,7 @@ class CaballeroTest extends munit.FunSuite:
     assertEquals(caballero.weight, 70.0)
 
   test("Un Caballero nuevo no tiene arma equipada"):
-    assertEquals(caballero.Slot_Arma, None)
+    assertEquals(caballero.SlotArma, None)
 
   test("Un Caballero nuevo tiene el inventario vacío"):
     assert(caballero.inventarioUtilizables.isEmpty)

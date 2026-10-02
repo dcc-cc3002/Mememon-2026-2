@@ -13,7 +13,7 @@ class LadronTest extends munit.FunSuite:
     assertEquals(ladron.weight, 55.0)
 
   test("Un Ladron nuevo no tiene arma equipada"):
-    assertEquals(ladron.Slot_Arma, None)
+    assertEquals(ladron.SlotArma, None)
 
   test("Un Ladron nuevo tiene el inventario vacío"):
     assert(ladron.inventarioUtilizables.isEmpty)

@@ -14,7 +14,7 @@ class MagoBlancoTest extends munit.FunSuite:
     assertEquals(mago.ManaPoints, 45.0)
 
   test("Un MagoBlanco nuevo no tiene arma equipada"):
-    assertEquals(mago.Slot_Arma, None)
+    assertEquals(mago.SlotArma, None)
 
   test("Un MagoBlanco nuevo tiene el inventario vacío"):
     assert(mago.inventarioUtilizables.isEmpty)
