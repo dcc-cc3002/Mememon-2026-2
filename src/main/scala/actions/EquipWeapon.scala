@@ -5,5 +5,5 @@ import items.weapons.AbstractWeapon
 
 class EquipWeapon extends Action {
   val name: String = "Equip Weapon"
-  var possible_options: List[AbstractWeapon]
+  var possible_options: List[AbstractWeapon]= List()
 }
