@@ -6,6 +6,6 @@ package controller
   * En esta clase debes implementar la lógica que conecta las distintas
   * entidades de tu modelo, maneja los turnos, y ejecuta las acciones.
   */
-class GameController {
+class GameController(private val units: List[Unit]) {
 
 }
