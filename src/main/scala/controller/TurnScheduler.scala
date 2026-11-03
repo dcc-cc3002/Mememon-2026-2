@@ -1,5 +1,6 @@
 package cl.uchile.dcc
 package controller
+import cl.uchile.dcc.models._
 
 import scala.collection.mutable
 
