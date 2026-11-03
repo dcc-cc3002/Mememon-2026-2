@@ -13,6 +13,9 @@ abstract class AbsCharacter(name: String, initialHp: Int, defense: Int, weight: 
   var inventory: List[Potion] = List()
   var equippedWeapon: Option[Weapon] = None
   var availableActions: List[Action] = List(new AttackAction())
+  var currentPanel: Option[Panel] = None
+
+  def canEquip(weapon: Weapon): Boolean
 
   override def doAction(action: Action, target: Target): Boolean =
     if availableActions.exists(_.id == action.id) then
@@ -21,6 +24,7 @@ abstract class AbsCharacter(name: String, initialHp: Int, defense: Int, weight: 
       false
 
   override def receiveAttackFromEnemy(action: AttackAction, source: Enemy): Boolean = {
+    require(this.hp > 0, "Una unidad que está derrotada no puede recibir acciones.")
     if (this.hp <= 0) return false
     val damage = source.attack - this.defense
     this.hp = math.max(0, this.hp - damage)
@@ -30,6 +34,9 @@ abstract class AbsCharacter(name: String, initialHp: Int, defense: Int, weight: 
   override def receiveAttackFromCharacter(action: AttackAction, source: AbsCharacter): Boolean = false
 
   override def receiveEquipFromCharacter(action: EquipAction, source: AbsCharacter): Boolean = {
+    require(this.hp > 0, "Una unidad derrotada no puede equipar armas.")
+    require(this.canEquip(action.weaponToEquip), "El personaje no puede equiparse este tipo de arma.")
+
     if (this == source) {
       this.equippedWeapon = Some(action.weaponToEquip)
       true
@@ -38,10 +45,20 @@ abstract class AbsCharacter(name: String, initialHp: Int, defense: Int, weight: 
 
   override def receiveEquipFromEnemy(action: EquipAction, source: Enemy): Boolean = false
 
+  override def receiveHeal(action: HealAction, source: AbsMagicianCharacter): Boolean = {
+    require(this.hp > 0, "Una unidad derrotada no puede recibir acciones.")
+    true
+  }
+
+  override def receivePurify(action: PurifyAction, source: AbsMagicianCharacter): Boolean = {
+    require(false, "Purificación debe ser recibida únicamente por enemigos.")
+    false
+  }
+
 abstract class AbsMagicianCharacter(name: String, hp: Int, defense: Int, weight: Int, var mana: Int) extends AbsCharacter(name, hp, defense, weight)
 
 class Enemy(name: String, initialHp: Int, defense: Int, weight: Int, val attack: Int) extends EntityAttributes(name, initialHp, defense, weight) with Source with Target:
-
+  var currentPanel: Option[Panel] = None
   var availableActions: List[Action] = List(new AttackAction())
 
   override def doAction(action: Action, target: Target): Boolean =
@@ -51,6 +68,7 @@ class Enemy(name: String, initialHp: Int, defense: Int, weight: Int, val attack:
       false
 
   override def receiveAttackFromCharacter(action: AttackAction, source: AbsCharacter): Boolean = {
+    require(this.hp > 0, "Una unidad que está derrotada no puede recibir acciones.")
     if (this.hp <= 0)
       return false
 
@@ -64,16 +82,56 @@ class Enemy(name: String, initialHp: Int, defense: Int, weight: Int, val attack:
     return true
   }
 
+  override def receiveHeal(action: HealAction, source: AbsMagicianCharacter): Boolean = {
+    require(false, "Curación debe ser recibida únicamente por personajes.")
+    false
+  }
+
+  override def receivePurify(action: PurifyAction, source: AbsMagicianCharacter): Boolean = {
+    require(this.hp > 0, "Una unidad derrotada no puede recibir acciones.")
+    true
+  }
   override def receiveAttackFromEnemy(action: AttackAction, source: Enemy): Boolean = false
   override def receiveEquipFromCharacter(action: EquipAction, source: AbsCharacter): Boolean = false
   override def receiveEquipFromEnemy(action: EquipAction, source: Enemy): Boolean = false
 
-class Knight(name: String, hp: Int, defense: Int, weight: Int) extends AbsCharacter(name, hp, defense, weight)
-class Archer(name: String, hp: Int, defense: Int, weight: Int) extends AbsCharacter(name, hp, defense, weight)
-class Thief(name: String, hp: Int, defense: Int, weight: Int) extends AbsCharacter(name, hp, defense, weight)
+class Knight(name: String, hp: Int, defense: Int, weight: Int) extends AbsCharacter(name, hp, defense, weight) {
+  override def canEquip(weapon: Weapon): Boolean = weapon match {
+    case _: Sword => true
+    case _ => false
+  }
+}
 
-class BlackMagician(name: String, hp: Int, defense: Int, weight: Int, mana: Int) extends AbsMagicianCharacter(name, hp, defense, weight, mana)
-class WhiteMagician(name: String, hp: Int, defense: Int, weight: Int, mana: Int) extends AbsMagicianCharacter(name, hp, defense, weight, mana)
+class Archer(name: String, hp: Int, defense: Int, weight: Int) extends AbsCharacter(name, hp, defense, weight) {
+  override def canEquip(weapon: Weapon): Boolean = weapon match {
+    case _: Bow => true
+    case _ => false
+  }
+}
+
+class Thief(name: String, hp: Int, defense: Int, weight: Int) extends AbsCharacter(name, hp, defense, weight) {
+  override def canEquip(weapon: Weapon): Boolean = weapon match {
+    case _: Dagger => true
+    case _: Sword => true // Si tu tabla dice que no usa espada, borra esta línea
+    case _ => false
+  }
+}
+
+class BlackMagician(name: String, hp: Int, defense: Int, weight: Int, mana: Int) extends AbsMagicianCharacter(name, hp, defense, weight, mana) {
+  override def canEquip(weapon: Weapon): Boolean = weapon match {
+    case _: Wand => true
+    case _: MagicStaff => true
+    case _ => false
+  }
+}
+
+class WhiteMagician(name: String, hp: Int, defense: Int, weight: Int, mana: Int) extends AbsMagicianCharacter(name, hp, defense, weight, mana) {
+  override def canEquip(weapon: Weapon): Boolean = weapon match {
+    case _: Wand => true
+    case _: MagicStaff => true
+    case _ => false
+  }
+}
 
 class Player(var playerUnits: List[AbsCharacter] = List()):
   def isDefeated: Boolean =

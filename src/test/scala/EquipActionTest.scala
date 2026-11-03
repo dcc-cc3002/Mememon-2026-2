@@ -32,4 +32,14 @@ class EquipActionTest extends FunSuite {
 
     assert(!success, "Trying to equip a weapon to an enemy should return false")
   }
+
+  test("Un personaje no puede equipar un arma no permitida (lanza IllegalArgumentException)") {
+    val knight = new Knight("tung tung sahur", hp = 100, defense = 10, weight = 50) 
+    val bow = new Bow("legolas", attackPoints = 30, weaponWeight = 10, owner = knight)
+    val equipAction = new EquipAction(bow)
+
+    intercept[IllegalArgumentException] {
+      knight.receiveEquipFromCharacter(equipAction, knight)
+    }
+  }
 }
