@@ -1,20 +1,28 @@
-Hay parte de la tarea parcial 1, la verdad creo que lo coloque mal, pero como no la entregue lo deje ahi (aviso por si acaso).
+# Tarea 2 - Entrega Final 2
 
-Ahora si el readme:
+## Descripción General
+Este repositorio contiene la finalización de la entrega final 2, la cual unifica la arquitectura de control (Parcial 3) y la mejora del modelo de dominio mediante restricciones de negocio (Parcial 4).
 
-## Entrega final 1
+## Cambios y Características Implementadas
 
-## Organización del código
-El proyecto sigue el patrón arquitectónico MVC solicitado.
-- El modelo agrupa todas las entidades base del juego, las cuales fueron estructuradas utilizando traits y clases abstractas.
-- El controlador contiene al TurnScheduler, cuya responsabilidad es gestionar el estado de la batalla y mandar las entidades del modelo, manteniendo separadas las lógicas de datos y de flujo de juego.
+### 1. Sistema de control (Entrega Parcial 3)
+GameController: Implementación del controlador central para manejar el estado del juego.
+TurnScheduler: Sistema de turnos basado en recursión pura para el manejo de la cola de acciones (Action Queue), garantizando un flujo seguro y funcional.
+Triple Dispatch: Arquitectura implementada y blindada para resolver dinámicamente interacciones complejas (Ataques, Equipamiento, Hechizos) separando la lógica de quién ejecuta y quién recibe la acción.
+Corrección de Estado: Solución a problemas de variables ocultas (shadowing) con el parámetro initialHp, asegurando que el daño altere correctamente el estado de las unidades.
 
-## Decisiones de diseño
-Para la implementación del TurnScheduler, se tomó la decisión de utilizar Arreglos  y recursividad pura. Se evitó deliberadamente el uso de ciclos iterativos clásicos (for, while). El filtrado de unidades listas y el ordenamiento por excedente se construyeron de forma manual recursiva. Esto garantiza un control algorítmico estricto.
+### 2. Restricciones y nuevas reglas (Entrega Parcial 4)
+Se implementó un sistema estricto de validaciones utilizando la función nativa require() de Scala, lanzando IllegalArgumentException con mensajes descriptivos cuando se violan las reglas del juego:
+Estado Vital: Validaciones para impedir que unidades derrotadas (HP <= 0) ejecuten o reciban acciones.
+Equipamiento y Armamento:
+Los personajes requieren obligatoriamente un arma equipada para atacar.
+Restricción estricta de equipamiento según la clase del personaje (ej. Knights con espadas/arcos, White Mages con báculos/varitas) validado mediante Pattern Matching.
+Sistema de Magia:
+Validación de costo de Maná suficiente antes de castear.
+Requisito de portar un arma mágica para poder usar hechizos.
+Restricciones de objetivo: Purificación exclusiva para enemigos y Curación exclusiva para personajes aliados.
+Tablero y Movimiento: Validación espacial que restringe el movimiento de unidades únicamente hacia paneles aledaños (adyacentes).
 
-## Patrones de diseño
-El código se sustenta fuertemente en el polimorfismo. El programador de turnos no conoce clases concretas, sino que interactúa exclusivamente con la abstracción Entity. Esto respeta el principio de diseño Abierto-Cerrado (Open-Closed Principle, cabe aclarar que lo use de las últimas clases, supuse que se podía), permitiendo que en el futuro se puedan agregar nuevos tipos de unidades sin tener que modificar el código interno del TurnScheduler.
-
-## Bonificaciones aplicadas (debido a que no entregue las tareas parciales)
-- Inglés: Todo el código fuente, nombres de variables, métodos, y la documentación interna (ScalaDoc) están 100% en inglés.
-- Uso de Git: Se registraron pequeños cambios progresivos utilizando la nomenclatura de Conventional Commits.
+### 3. Testing
+* Suite de pruebas actualizada para capturar y validar todas las excepciones esperadas utilizando intercept[IllegalArgumentException].
+* Cobertura completa de los casos de borde exigidos en los enunciados.
