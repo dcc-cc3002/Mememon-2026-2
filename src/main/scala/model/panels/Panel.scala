@@ -3,9 +3,15 @@ package model.panels
 
 import model.units.UnitsCommon
 
-
+/** Every panel created so far, used to find adjacent panels. */
 var PanelsList: List[Panel] = Nil
 
+/** A panel of the game map. Each new panel registers itself in PanelsList.
+ *
+ * @param x The x coordinate of the panel.
+ * @param y The y coordinate of the panel.
+ * @param units The units located in the panel.
+ */
 class Panel(val x: Int, val y: Int, val units: List[UnitsCommon]) extends PanelContract {
   PanelsList = this :: PanelsList
   override def nearbyPanels(): List[Panel] = {

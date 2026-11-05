@@ -5,7 +5,7 @@ import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable
 import model.units.{UnitsCommon, Character, EnemiesContract}
 
-
+/** Default implementation of the turn scheduler. */
 class TurnScheduler extends TurnSchedulerContract {
   private val units: ArrayBuffer[UnitsCommon] = ArrayBuffer[UnitsCommon]()
   private val actionBars: mutable.Map[UnitsCommon, Int] = mutable.Map[UnitsCommon, Int]()
@@ -62,10 +62,7 @@ class TurnScheduler extends TurnSchedulerContract {
       if statusActionBar(unit) then
         var position = 0
 
-        //Avanza mientras
-        //No se llegue al final de la lista, y
-        //La unidad que ya está en esa posición tenga un excedente mayor o igual
-        //al de la nueva (o sea, la nueva todavía no le gana)
+        // Find the position where the new unit goes, keeping the list sorted from highest to lowest excess
         while (position < result.length && excedent(result(position)) >= excedent(unit)) {
           position+=1
         }
