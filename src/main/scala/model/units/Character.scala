@@ -20,8 +20,8 @@ trait MagicCharacter extends Character {
   def mana: Int
 }
 
-abstract class AbstractCharacter(val name: String, val health: Int, val defense: Int, val weight: Int, val weapon: Option[Weapon],
-                                 val utilities: List[String]) extends Character {
+abstract class AbstractCharacter(name: String, health: Int, defense: Int, weight: Int, val weapon: Option[Weapon],
+                                 val utilities: List[String]) extends AbstractUnit(name, health, defense, weight) with Character {
   override def maxActionBar: Double = weight + 0.5 * weapon.map(_.weight).getOrElse(0)
 }
 

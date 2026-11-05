@@ -5,6 +5,6 @@ trait EnemiesContract extends UnitsCommon {
   def attack: Int
 }
 
-class Enemy(val name: String, val health: Int, val attack: Int, val defense: Int, val weight: Int) extends EnemiesContract {
+class Enemy(name: String, health: Int, val attack: Int, defense: Int, weight: Int) extends AbstractUnit(name, health, defense, weight) with EnemiesContract {
   override def maxActionBar: Double = weight
 }
