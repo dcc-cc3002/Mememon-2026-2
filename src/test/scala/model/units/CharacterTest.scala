@@ -1,6 +1,8 @@
 package cl.uchile.dcc
 package model.units
 
+import model.usable.{Sword, Wand}
+
 class CharacterTest extends munit.FunSuite:
   var knight: Option[Character] = None
   var archer: Option[Character] = None
@@ -39,6 +41,19 @@ class CharacterTest extends munit.FunSuite:
     assertEquals(t.weapon, None)
     assertEquals(t.utilities, List("potion"))
 
+  test("maxActionBar of a Character without weapon is its weight"):
+    assertEquals(knight.get.maxActionBar, 55.0)
+
+  test("maxActionBar of a Character with weapon is its weight plus half the weapon weight"):
+    val sword = new Sword("Excalibur", 10, 10, None)
+    val armedKnight: Character = new Knight("Juan", 90, 10, 55, Some(sword), Nil)
+    assertEquals(armedKnight.maxActionBar, 60.0)
+
+  test("maxActionBar of a Character with an odd weapon weight keeps the decimal"):
+    val sword = new Sword("Excalibur", 10, 5, None)
+    val armedKnight: Character = new Knight("Juan", 90, 10, 55, Some(sword), Nil)
+    assertEquals(armedKnight.maxActionBar, 57.5)
+
 
 class MagicCharacterTest extends munit.FunSuite:
   var bwizard: Option[MagicCharacter] = None
@@ -69,7 +84,10 @@ class MagicCharacterTest extends munit.FunSuite:
     assertEquals(w.utilities, List("potion"))
     assertEquals(w.mana, 6)
 
-
+  test("maxActionBar of a MagicCharacter with weapon is its weight plus half the weapon weight"):
+    val wand = new Wand("Varita", 5, 20, None, 30)
+    val armedWizard: MagicCharacter = new BlackWizard("Juan", 90, 10, 55, Some(wand), Nil, 5)
+    assertEquals(armedWizard.maxActionBar, 65.0)
 
 
 

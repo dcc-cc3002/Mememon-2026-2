@@ -15,3 +15,6 @@ class EnemiesContractTest extends munit.FunSuite:
     assertEquals(e.attack, 100)
     assertEquals(e.defense, 55)
     assertEquals(e.weight, 120)
+
+  test("maxActionBar of an Enemy is its weight"):
+    assertEquals(enemy.get.maxActionBar, 120.0)

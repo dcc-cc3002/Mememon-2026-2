@@ -3,8 +3,7 @@ package model.combat
 
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable
-import model.units.{UnitsCommon, Character, EnemiesContract, Enemy}
-import model.usable.Weapon
+import model.units.{UnitsCommon, Character, EnemiesContract}
 
 trait TurnSchedulerContract {
   def unitsArrayBuffer: ArrayBuffer[UnitsCommon]
@@ -40,10 +39,7 @@ class TurnScheduler extends TurnSchedulerContract {
   }
 
   override def maxActionBarUnit(unit: UnitsCommon): Double = {
-    unit match {
-      case c: Character => c.weight + 0.5*c.weapon.map(_.weight).getOrElse(0)
-      case c: EnemiesContract => c.weight
-    }
+    unit.maxActionBar
   }
 
   override def reset(unit: UnitsCommon): mutable.Map[UnitsCommon, Int] = {

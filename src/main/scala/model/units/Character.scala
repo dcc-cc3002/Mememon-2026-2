@@ -8,6 +8,7 @@ trait UnitsCommon {
   def health: Int
   def defense: Int
   def weight: Int
+  def maxActionBar: Double
 }
 
 trait Character extends UnitsCommon {
@@ -20,7 +21,9 @@ trait MagicCharacter extends Character {
 }
 
 abstract class AbstractCharacter(val name: String, val health: Int, val defense: Int, val weight: Int, val weapon: Option[Weapon],
-                                 val utilities: List[String]) extends Character
+                                 val utilities: List[String]) extends Character {
+  override def maxActionBar: Double = weight + 0.5 * weapon.map(_.weight).getOrElse(0)
+}
 
 
 abstract class AbstractMagicCharacter(name: String, health: Int, defense: Int, weight: Int, weapon: Option[Weapon], utilities: List[String],
