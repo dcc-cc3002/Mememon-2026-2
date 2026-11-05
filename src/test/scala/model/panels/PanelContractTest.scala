@@ -8,7 +8,7 @@ class PanelContractTest extends munit.FunSuite:
   var knight: Option[Character] = None
 
   override def beforeEach(context: BeforeEach): Unit = {
-    knight = Some(new Knight("Juan", 90, 10, 55, None, List("potion")))
+    knight = Some(new Knight("Juan", 90, 10, 55, None, Nil))
     panel = Some(new Panel(1, 2 , List(knight.get)))
   }
 

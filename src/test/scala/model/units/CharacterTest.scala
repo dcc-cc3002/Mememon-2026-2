@@ -1,17 +1,20 @@
 package cl.uchile.dcc
 package model.units
 
-import model.usable.{Sword, Wand}
+import model.usable.{Bow, HealingPotion, ManaPotion, Sword}
 
 class CharacterTest extends munit.FunSuite:
   var knight: Option[Character] = None
   var archer: Option[Character] = None
   var thief: Option[Character] = None
+  val healingPotion = new HealingPotion("Healing")
+  val manaPotion = new ManaPotion("Mana")
+  val bow = new Bow("Long Bow", 10, 5, None)
 
   override def beforeEach(context: BeforeEach): Unit = {
-    knight = Some(new Knight("Juan", 90, 10, 55, None, List("potion")))
-    archer = Some(new Archer("Pedro", 92, 13, 54, None, List("arrow")))
-    thief = Some(new Thief("Diego", 80, 5, 30, None, List("potion")))
+    knight = Some(new Knight("Juan", 90, 10, 55, None, List(healingPotion)))
+    archer = Some(new Archer("Pedro", 92, 13, 54, None, List(healingPotion, bow)))
+    thief = Some(new Thief("Diego", 80, 5, 30, None, List(manaPotion)))
   }
 
   test("Knight fulfills the Character contract"):
@@ -21,7 +24,7 @@ class CharacterTest extends munit.FunSuite:
     assertEquals(k.defense, 10)
     assertEquals(k.weight, 55)
     assertEquals(k.weapon, None)
-    assertEquals(k.utilities, List("potion"))
+    assertEquals(k.utilities, List(healingPotion))
 
   test("Archer fulfills the Character contract"):
     val a = archer.get
@@ -30,7 +33,7 @@ class CharacterTest extends munit.FunSuite:
     assertEquals(a.defense, 13)
     assertEquals(a.weight, 54)
     assertEquals(a.weapon, None)
-    assertEquals(a.utilities, List("arrow"))
+    assertEquals(a.utilities, List(healingPotion, bow))
 
   test("Thief fulfills the Character contract"):
     val t = thief.get
@@ -39,7 +42,7 @@ class CharacterTest extends munit.FunSuite:
     assertEquals(t.defense, 5)
     assertEquals(t.weight, 30)
     assertEquals(t.weapon, None)
-    assertEquals(t.utilities, List("potion"))
+    assertEquals(t.utilities, List(manaPotion))
 
   test("maxActionBar of a Character without weapon is its weight"):
     assertEquals(knight.get.maxActionBar, 55.0)

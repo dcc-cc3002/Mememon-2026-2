@@ -1,15 +1,17 @@
 package cl.uchile.dcc
 package model.units
 
-import model.usable.Wand
+import model.usable.{HealingPotion, ManaPotion, Wand}
 
 class MagicCharacterTest extends munit.FunSuite:
   var bwizard: Option[MagicCharacter] = None
   var wwizard: Option[MagicCharacter] = None
-
+  val healingPotion = new HealingPotion("Healing")
+  val manaPotion = new ManaPotion("Mana")
+  
   override def beforeEach(context: BeforeEach): Unit = {
-    bwizard = Some(new BlackWizard("Juan", 90, 10, 55, None, List("potion"), 5))
-    wwizard = Some(new WhiteWizard("Matias", 80, 5, 60, None, List("potion"), 6))
+    bwizard = Some(new BlackWizard("Juan", 90, 10, 55, None, List(manaPotion), 5))
+    wwizard = Some(new WhiteWizard("Matias", 80, 5, 60, None, List(healingPotion, manaPotion), 6))
   }
 
   test("BlackWizard fulfills the MagicCharacter contract"):
@@ -19,7 +21,7 @@ class MagicCharacterTest extends munit.FunSuite:
     assertEquals(b.defense, 10)
     assertEquals(b.weight, 55)
     assertEquals(b.weapon, None)
-    assertEquals(b.utilities, List("potion"))
+    assertEquals(b.utilities, List(manaPotion))
     assertEquals(b.mana, 5)
 
   test("WhiteWizard fulfills the MagicCharacter contract"):
@@ -29,7 +31,7 @@ class MagicCharacterTest extends munit.FunSuite:
     assertEquals(w.defense, 5)
     assertEquals(w.weight, 60)
     assertEquals(w.weapon, None)
-    assertEquals(w.utilities, List("potion"))
+    assertEquals(w.utilities, List(healingPotion, manaPotion))
     assertEquals(w.mana, 6)
 
   test("maxActionBar of a MagicCharacter with weapon is its weight plus half the weapon weight"):

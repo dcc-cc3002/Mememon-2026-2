@@ -11,7 +11,7 @@ class MagicWeaponTest extends munit.FunSuite:
 
   override def beforeEach(context: BeforeEach): Unit = {
     wand = Some(new Wand("Elder Wand", 10, 1, None, 40))
-    knight = Some(new Knight("Juan", 90, 10, 55, wand, List("potion")))
+    knight = Some(new Knight("Juan", 90, 10, 55, wand, Nil))
     staff = Some(new Staff("Oak Staff", 15, 5, knight, 25))
   }
 

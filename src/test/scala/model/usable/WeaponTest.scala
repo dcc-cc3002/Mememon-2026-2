@@ -12,7 +12,7 @@ class WeaponTest extends munit.FunSuite:
 
   override def beforeEach(context: BeforeEach): Unit = {
     sword = Some(new Sword("Excalibur", 30, 8, None))
-    knight = Some(new Knight("Juan", 90, 10, 55, sword, List("potion")))
+    knight = Some(new Knight("Juan", 90, 10, 55, sword, Nil))
     dagger = Some(new Dagger("Shiv", 12, 2, knight))
     bow = Some(new Bow("Longbow", 20, 4, knight))
   }
