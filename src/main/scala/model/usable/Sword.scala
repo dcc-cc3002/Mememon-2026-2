@@ -1,0 +1,7 @@
+package cl.uchile.dcc
+package model.usable
+
+import model.units.Character
+
+class Sword(name: String, attack: Int, weight: Int,
+            owner: Option[Character]) extends AbstractWeapon(name, attack, weight, owner)

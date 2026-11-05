@@ -4,7 +4,7 @@ package model.players
 
 
 /*
-class PlayersTest extends munit.FunSuite:
+class PlayerContractTest extends munit.FunSuite:
   var player: Option[Players] = None
 
   override def beforeEach(context: BeforeEach): Unit = {

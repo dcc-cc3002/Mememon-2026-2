@@ -5,18 +5,6 @@ import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable
 import model.units.{UnitsCommon, Character, EnemiesContract}
 
-trait TurnSchedulerContract {
-  def unitsArrayBuffer: ArrayBuffer[UnitsCommon]
-  def add(unit: UnitsCommon): ArrayBuffer[UnitsCommon]
-  def remove(unit: UnitsCommon): ArrayBuffer[UnitsCommon]
-  def maxActionBarUnit(unit: UnitsCommon): Double
-  def actionBarsMap: mutable.Map[UnitsCommon, Int]
-  def reset(unit: UnitsCommon): mutable.Map[UnitsCommon, Int]
-  def increaseActionBars(k: Int): mutable.Map[UnitsCommon, Int]
-  def statusActionBar(unit: UnitsCommon): Boolean
-  def completedUnits(): ArrayBuffer[UnitsCommon]
-  def currentTurn(): Option[UnitsCommon]
-}
 
 class TurnScheduler extends TurnSchedulerContract {
   private val units: ArrayBuffer[UnitsCommon] = ArrayBuffer[UnitsCommon]()
