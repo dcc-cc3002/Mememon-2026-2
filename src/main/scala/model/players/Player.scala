@@ -1,11 +1,8 @@
 package cl.uchile.dcc
 package model.players
 
+import model.units.UnitsCommon
 
-/*
-class Player(val units: List[UnitsCommon]) extends PlayerContract{
-  override def defeated(): Boolean = {
-    It remains to be defined when it is considered defeated.
-   }
+class Player(val units: List[UnitsCommon]) extends PlayerContract {
+  override def defeated(): Boolean = units.forall(_.health <= 0)
 }
- */
