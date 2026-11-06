@@ -5,4 +5,7 @@ package model.actions
  *
  * @param name The name of the action.
  */
-class Purify(val name: String) extends ActionContract
+class Purify(val name: String) extends ActionContract {
+  override def execute(source: Source, target: Target): Boolean =
+    source.purifyTo(target)
+}

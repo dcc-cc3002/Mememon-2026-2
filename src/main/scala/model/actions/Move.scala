@@ -5,5 +5,8 @@ package model.actions
  *
  * @param name The name of the action.
  */
-class Move(val name: String) extends ActionContract
+class Move(val name: String) extends ActionContract {
+  override def execute(source: Source, target: Target): Boolean =
+    source.moveTo(target)
+}
 

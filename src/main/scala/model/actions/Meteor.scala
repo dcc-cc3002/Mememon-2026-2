@@ -5,5 +5,8 @@ package model.actions
  *
  * @param name The name of the action.
  */
-class Meteor(val name: String) extends ActionContract
+class Meteor(val name: String) extends ActionContract {
+  override def execute(source: Source, target: Target): Boolean =
+    source.meteorTo(target)
+}
 
