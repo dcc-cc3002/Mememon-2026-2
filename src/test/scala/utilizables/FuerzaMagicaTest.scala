@@ -1,11 +1,24 @@
 package utilizables
 
 class FuerzaMagicaTest extends munit.FunSuite:
-  test("Una FuerzaMagica creada con nombre que se da"):
-    val potion = new FuerzaMagica("Potion test A")
-    assertEquals(potion.nombre, "Potion test A")
+  var pocion: FuerzaMagica = null
 
-  test("Two potions with different names"):
-    val option1 = new FuerzaMagica("Test1")
-    val option2 = new FuerzaMagica("Test2")
-    assertNotEquals(option1.nombre,option2.nombre)
+  override def beforeEach(context: BeforeEach): Unit =
+    pocion = new FuerzaMagica("A")
+
+  test("poción fuerza magica crea con nombre dado"):
+    assert(pocion.nombre == "A")
+
+  test("Dos pociones de FuerzaMagica con el mismo nombre son iguales"):
+    val otra = new FuerzaMagica("A")
+    assertEquals(pocion, otra)
+    assertEquals(otra, pocion)
+
+  test("Dos pociones de FuerzaMagica con distinto nombre no son iguales"):
+    assertNotEquals(pocion, new FuerzaMagica("m"))
+
+  test("Una poción de FuerzaMagica y una de Mana con el mismo nombre no son iguales"):
+    val a: Pocion = pocion
+    val b: Pocion = new Mana("A")
+    assertNotEquals(a, b)
+    assertNotEquals(b, a)

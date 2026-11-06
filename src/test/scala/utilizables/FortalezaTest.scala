@@ -1,11 +1,24 @@
 package utilizables
 
 class FortalezaTest extends munit.FunSuite:
-  test("Una Fortaleza tiene el nombre correcto, que se le dio"):
-    val pocion = new Fortaleza("Pocion de fortaleza A")
-    assertEquals(pocion.nombre,"Pocion de fortaleza A")
-    
-    test("Two of them with different names"):
-      val option1 = new Fortaleza("Pocion de fortaleza A")
-      val option2 = new Fortaleza("Pocion de fortaleza B")
-      assertNotEquals(option1.nombre, option2.nombre)
+  var pocion: Fortaleza = null
+
+  override def beforeEach(context: BeforeEach): Unit =
+    pocion = new Fortaleza("A")
+
+  test("poción de fortaleza con nombre dado"):
+    assert(pocion.nombre == "A")
+
+  test("pociones de Fortaleza mismo nombre soniguales"):
+    val otra = new Fortaleza("A")
+    assertEquals(pocion, otra)
+    assertEquals(otra, pocion)
+
+  test(" pociones de Fortaleza con distinto nombre no  iguales"):
+    assertNotEquals(pocion, new Fortaleza("Otra"))
+
+  test("poción de fortaleza y curacion con mismo nombre no iguales"):
+    val a: Pocion = pocion
+    val b: Pocion = new Curacion("A")
+    assertNotEquals(a, b)
+    assertNotEquals(b, a)
