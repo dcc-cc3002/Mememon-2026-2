@@ -10,8 +10,20 @@ trait PanelContract extends Target {
   def x: Int
   /** Returns the y coordinate of the panel. */
   def y: Int
-  /** Returns the units located in the panel. */
+  /** Returns the units currently located in the panel. */
   def units: List[UnitsCommon]
   /** Returns the panels adjacent to this one, at coordinates (x +- 1, y) and (x, y +- 1). */
   def nearbyPanels(): List[PanelContract]
+
+  /** Places a unit in the panel. Does nothing if the unit is already there.
+   *
+   * @param unit The unit to place.
+   */
+  def addUnit(unit: UnitsCommon): Unit
+
+  /** Removes a unit from the panel. Does nothing if the unit is not there.
+   *
+   * @param unit The unit to remove.
+   */
+  def removeUnit(unit: UnitsCommon): Unit
 }

@@ -10,12 +10,26 @@ var PanelsList: List[Panel] = Nil
 
 /** A panel of the game map. Each new panel registers itself in PanelsList.
  *
+ * A panel can only receive the Move and Meteor actions; every other action fails.
+ *
  * @param x The x coordinate of the panel.
  * @param y The y coordinate of the panel.
- * @param units The units located in the panel.
+ * @param initialUnits The units located in the panel at the start.
  */
-class Panel(val x: Int, val y: Int, val units: List[UnitsCommon]) extends PanelContract {
+class Panel(val x: Int, val y: Int, val initialUnits: List[UnitsCommon]) extends PanelContract {
+  private var currentUnits: List[UnitsCommon] = initialUnits
+
   PanelsList = this :: PanelsList
+
+  override def units: List[UnitsCommon] = currentUnits
+
+  override def addUnit(unit: UnitsCommon): Unit =
+    if !currentUnits.contains(unit) then
+      currentUnits = currentUnits :+ unit
+
+  override def removeUnit(unit: UnitsCommon): Unit =
+    currentUnits = currentUnits.filterNot(_ == unit)
+  
   override def nearbyPanels(): List[Panel] = {
     var nearbyPanelsList: List[Panel] = Nil
     for (p <- PanelsList) {
@@ -26,11 +40,28 @@ class Panel(val x: Int, val y: Int, val units: List[UnitsCommon]) extends PanelC
     }
     nearbyPanelsList
   }
-  // Target: actions a panel can receive 
-  override def receivesMove(source: Source): Boolean = false
-  override def receivesMeteor(source: Source): Boolean = false
 
-  // Target: actions a panel cannot receive
+  // Target, a unit can only move here from an adjacent panel
+  override def receivesMove(unit: UnitsCommon): Boolean =
+    val origin = nearbyPanels().find(panel => panel.units.contains(unit))
+    if (origin.isDefined) {
+      origin.get.removeUnit(unit)
+      addUnit(unit)
+      true
+    } 
+    else {
+      false
+    }
+
+  // Target, Meteor damages every unit in the panel
+  override def receivesMeteor(source: Source): Boolean = {
+    for (unit <- units) {
+      unit.takeDamage(source.magicDamage)
+    }
+    true
+  }
+
+  // Target, actions a panel cannot receive
   override def receivesAttack(source: Source): Boolean = false
   override def receivesEquipWeapon(source: Source, weapon: Weapon): Boolean = false
   override def receivesConsumePotion(source: Source, potion: Potion): Boolean = false
