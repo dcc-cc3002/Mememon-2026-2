@@ -1,6 +1,8 @@
 package cl.uchile.dcc
 package model.units
 
+import model.actions.Source
+
 /** An enemy of the game.
  *
  * Its action bar maximum is its weight.
@@ -13,4 +15,7 @@ package model.units
  */
 class Enemy(name: String, health: Int, val attack: Int, defense: Int, weight: Int) extends AbstractUnit(name, health, defense, weight) with EnemiesContract {
   override def maxActionBar: Double = weight
+
+  // Target: only enemies can be purified 
+  override def receivesPurify(source: Source): Boolean = false
 }
