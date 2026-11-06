@@ -4,6 +4,8 @@ package model.actions
 import model.usable.{Weapon, Potion}
 
 trait Source {
+  def doAction(action: ActionContract, target: Target): Boolean
+
   def attackTo(target: Target): Boolean
   def moveTo(target: Target): Boolean
   def equipWeaponTo(target: Target, weapon: Weapon): Boolean

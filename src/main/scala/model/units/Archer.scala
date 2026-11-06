@@ -3,6 +3,8 @@ package model.units
 
 import model.usable.{Weapon, usableCommon}
 
+import cl.uchile.dcc.model.actions.Target
+
 /** An archer, a common character.
  *
  * @param name The name of the unit.
