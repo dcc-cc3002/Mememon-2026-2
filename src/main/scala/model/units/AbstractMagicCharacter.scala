@@ -5,14 +5,67 @@ import model.usable.{Weapon, usableCommon}
 
 /** Base class for characters that can use magic.
  *
+ * Casting a spell spends mana only if the spell succeeds. A magic strength potion
+ * increases the damage of the next spell by 50%.
+ *
  * @param name The name of the unit.
- * @param health The health points of the unit.
- * @param defense The defense points of the unit.
+ * @param initialHealth The maximum health points of the unit. The unit starts with this health.
+ * @param initialDefense The defense points the unit starts with.
  * @param weight The weight of the unit.
- * @param weapon The weapon equipped by the character, if any.
- * @param utilities The inventory of usable items of the character.
- * @param mana The mana points of the character.
+ * @param initialWeapon The weapon the character starts with, if any.
+ * @param initialUtilities The inventory of usable items the character starts with.
+ * @param maxMana The maximum mana points of the character. The character starts with this mana.
  */
-abstract class AbstractMagicCharacter(name: String, health: Int, defense: Int, weight: Int, weapon: Option[Weapon], utilities: List[usableCommon],
-                                      val mana: Int) extends AbstractCharacter(name, health, defense, weight, weapon, utilities) with MagicCharacter
+abstract class AbstractMagicCharacter(name: String, initialHealth: Int, initialDefense: Int, weight: Int, initialWeapon: Option[Weapon], initialUtilities: List[usableCommon],  
+                                      maxMana: Int) extends AbstractCharacter(name, initialHealth, initialDefense, weight, initialWeapon, initialUtilities) with MagicCharacter {
+  private var currentMana: Int = maxMana
+  private var magicStrengthActive: Boolean = false
+
+  override def mana: Int = currentMana
+  
+  override def magicDamage: Int = {
+    val baseDamage = super.magicDamage
+    if (magicStrengthActive) {
+      (baseDamage * 1.5).toInt
+    } 
+    else {
+      baseDamage
+    }
+  }
+
+  /** Returns true if the character has at least the given amount of mana.
+   *
+   * @param cost The mana cost of the spell.
+   */
+  protected def hasEnoughMana(cost: Int): Boolean =
+    currentMana >= cost
+
+  /** Spends the mana of a spell that was cast successfully, and ends the magic strength effect.
+   *
+   * @param cost The mana cost of the spell.
+   */
+  protected def spendMana(cost: Int): Unit = {
+    currentMana -= cost
+    magicStrengthActive = false
+  }
+
+  override def drinkManaPotion(): Boolean = {
+    val restored = (maxMana * 0.3).toInt
+    val newMana = currentMana + restored
+    if (newMana > maxMana) {
+      currentMana = maxMana
+    } 
+    else {
+      currentMana = newMana
+    }
+    true
+  }
+
+  override def drinkMagicStrengthPotion(): Boolean = {
+    magicStrengthActive = true
+    true
+  }
+  
+}
+
 
