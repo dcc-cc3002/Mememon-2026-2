@@ -1,33 +1,30 @@
-# Proyecto Semestral: Final Reality Tactics
 
-## Descripción del Proyecto
+# Tarea 2 - Entrega Final 2
 
-Este repositorio contiene la plantilla base para el proyecto semestral del curso. El objetivo principal es desarrollar una versión simplificada de un juego de combate táctico, enfocado exclusivamente en la implementación de la lógica de negocio mediante el patrón arquitectónico **Modelo-Vista-Controlador (MVC)**. 
+## Descripción General
+Este repositorio contiene la finalización de la entrega final 2, la cual unifica la arquitectura de control (Parcial 3) y la robustez del modelo de dominio mediante restricciones de negocio (Parcial 4). 
 
-En particular, a lo largo del semestre trabajarán en la construcción del **Modelo** (las entidades del juego como personajes, armas, paneles y sus interacciones mediante acciones) y el **Controlador** (el motor lógico encargado de gestionar los turnos, flujo del juego y reglas, como `GameController`). No se implementará una Vista gráfica (frontend), por lo que todo se basará en código Scala puro.
+## Cambios y Características Implementadas
 
-## Referencia Visual
+### 1. Sistema de control (Entrega Parcial 3)
+ GameController: Implementación del controlador central para manejar el estado del juego.
+ TurnScheduler: Sistema de turnos basado en recursión pura para el manejo de la cola de acciones (Action Queue), garantizando un flujo seguro y funcional.
+ Triple Dispatch: Arquitectura implementada y blindada para resolver dinámicamente interacciones complejas (Ataques, Equipamiento, Hechizos) separando la lógica de quién ejecuta y quién recibe la acción.
+ Corrección de Estado: Solución a problemas de variables ocultas (shadowing) con el parámetro initialHp, asegurando que el daño altere correctamente el estado de las unidades.
 
-Aunque el proyecto se evaluará mediante pruebas unitarias y lógica de consola sin necesidad de conectarlo a una interfaz web, aquí tienen una imagen del "front-end" conceptual del juego. Esto les servirá para hacerse una idea de cómo deberían verse estructurados lógicamente el mapa (en base a paneles) y sus unidades a lo largo de las entregas:
+### 2. Restricciones y nuevas reglas (Entrega Parcial 4)
+Se implementó un sistema estricto de validaciones utilizando la función nativa require() de Scala, lanzando IllegalArgumentException con mensajes descriptivos cuando se violan las reglas del juego:
+ Estado Vital: Validaciones para impedir que unidades derrotadas (HP <= 0) ejecuten o reciban acciones.
+ Equipamiento y Armamento: 
+   Los personajes requieren obligatoriamente un arma equipada para atacar.
+   Restricción estricta de equipamiento según la clase del personaje (ej. Knights con espadas/arcos, White Mages con báculos/varitas) validado mediante Pattern Matching.
+ Sistema de Magia:
+   Validación de costo de Maná suficiente antes de castear.
+   Requisito de portar un arma mágica para poder usar hechizos.
+   Restricciones de objetivo: Purificación exclusiva para enemigos y Curación exclusiva para personajes aliados.
+ Tablero y Movimiento: Validación espacial que restringe el movimiento de unidades únicamente hacia paneles aledaños (adyacentes).
 
-![resultado.jpg](resultado.jpg)
+### 3. Testing 
+* Suite de pruebas actualizada para capturar y validar todas las excepciones esperadas utilizando intercept[IllegalArgumentException].
+* Cobertura completa de los casos de borde exigidos en los enunciados.
 
-## Enunciado del Proyecto
-
-Las reglas completas del juego, las entidades requeridas y el detalle de cada entrega parcial y final pueden encontrarse en el enunciado oficial del proyecto.
-
-[Link de ucursos del enunciado](https://www.u-cursos.cl/ingenieria/2026/2/CC3002/1/material_docente/detalle?id=10946097)
-
-## ¿Qué se estará evaluando?
-
-El trabajo a lo largo del semestre será evaluado principalmente en base a los siguientes tres pilares:
-
-1. **Diseño (50%)**: Se evaluará la calidad de su código, exigiendo que este cumpla con los principios de diseño orientado a objetos enseñados en el curso. Se espera un código extensible y con responsabilidades bien definidas.
-2. **Testing y Coverage (35%)**: Se evaluará que su código tenga pruebas automatizadas utilizando **MUnit** con una cobertura de al menos el 90% para obtener el puntaje completo. Las pruebas deben comprobar tanto los casos de uso esperados como los casos de borde (ej. fallos en restricciones de acciones).
-3. **Documentación (15%)**: Cada clase, interfaz (trait) y método público debe estar debidamente documentado usando el formato Scaladoc.
-
-## Cómo empezar
-
-1. Lean detenidamente el enunciado principal del proyecto.
-2. Exploren este código base. Encontrarán una clase inicial `GameController` en el paquete `controller` desde la cual podrán comenzar a articular su lógica.
-3. Asegúrense de usar herramientas de control de versiones (Git) de manera constante, documentando adecuadamente sus avances mediante *commits*.
