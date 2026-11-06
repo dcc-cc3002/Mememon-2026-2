@@ -1,7 +1,9 @@
 package cl.uchile.dcc
 package model.panels
 
+import model.actions.Source
 import model.units.UnitsCommon
+import model.usable.{Potion, Weapon}
 
 /** Every panel created so far, used to find adjacent panels. */
 var PanelsList: List[Panel] = Nil
@@ -24,6 +26,17 @@ class Panel(val x: Int, val y: Int, val units: List[UnitsCommon]) extends PanelC
     }
     nearbyPanelsList
   }
+  // Target: actions a panel can receive 
+  override def receivesMove(source: Source): Boolean = false
+  override def receivesMeteor(source: Source): Boolean = false
+
+  // Target: actions a panel cannot receive
+  override def receivesAttack(source: Source): Boolean = false
+  override def receivesEquipWeapon(source: Source, weapon: Weapon): Boolean = false
+  override def receivesConsumePotion(source: Source, potion: Potion): Boolean = false
+  override def receivesThunder(source: Source): Boolean = false
+  override def receivesHeal(source: Source): Boolean = false
+  override def receivesPurify(source: Source): Boolean = false
 }
 
 

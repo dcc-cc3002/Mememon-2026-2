@@ -1,10 +1,11 @@
 package cl.uchile.dcc
 package model.panels
 
+import model.actions.Target
 import model.units.UnitsCommon
 
 /** Contract for the panels (cells) of the game map. */
-trait PanelContract {
+trait PanelContract extends Target {
   /** Returns the x coordinate of the panel. */
   def x: Int
   /** Returns the y coordinate of the panel. */
