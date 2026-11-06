@@ -1,6 +1,7 @@
 package cl.uchile.dcc
 package model.units
 
+import model.actions.Target
 import model.usable.{Weapon, usableCommon}
 
 /** A white wizard, a magic character.
@@ -14,7 +15,16 @@ import model.usable.{Weapon, usableCommon}
  * @param mana The mana points of the character.
  */
 class WhiteWizard(name: String, health: Int, defense: Int, weight:
-Int, weapon: Option[Weapon], utilities: List[usableCommon], mana: Int) extends AbstractMagicCharacter(name, health, defense, weight, weapon, utilities, mana)
+Int, weapon: Option[Weapon], utilities: List[usableCommon], mana: Int) extends AbstractMagicCharacter(name, health, defense, weight, weapon, utilities, mana) {
+  private val healCost: Int = 15
+  private val purifyCost: Int = 25
+
+  override def healTo(target: Target): Boolean =
+    mana >= healCost && target.receivesHeal(this)
+
+  override def purifyTo(target: Target): Boolean =
+    mana >= purifyCost && target.receivesPurify(this)
+}
 
 
 
