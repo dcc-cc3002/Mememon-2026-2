@@ -8,8 +8,10 @@ import model.units.Character
  * @param name The name of the weapon.
  * @param attack The attack points of the weapon.
  * @param weight The weight of the weapon.
- * @param owner The character that owns the weapon, if any.
+ * @param owner The character that owns the weapon at the start, if any.
  */
 class Dagger(name: String, attack: Int, weight: Int,
-             owner: Option[Character]) extends AbstractWeapon(name, attack, weight, owner)
+             owner: Option[Character]) extends AbstractWeapon(name, attack, weight, owner) {
+  override def isEquippableBy(character: Character): Boolean = character.canEquipDagger
+}
 

@@ -8,9 +8,9 @@ import model.units.Character
  * @param name The name of the weapon.
  * @param attack The attack points of the weapon.
  * @param weight The weight of the weapon.
- * @param owner The character that owns the weapon, if any.
+ * @param owner The character that owns the weapon at the start, if any.
  * @param magicAttack The magic attack points of the weapon.
  */
-abstract class AbstractMagicWeapon(name: String, attack: Int, weight: Int, owner: Option[Character], val magicAttack: Int)
+abstract class AbstractMagicWeapon(name: String, attack: Int, weight: Int, owner: Option[Character], override val magicAttack: Int)
   extends AbstractWeapon(name, attack, weight, owner) with MagicWeapon
 
