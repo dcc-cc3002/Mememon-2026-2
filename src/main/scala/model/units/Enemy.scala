@@ -5,17 +5,24 @@ import model.actions.Source
 
 /** An enemy of the game.
  *
- * Its action bar maximum is its weight.
+ * Its action bar maximum is its weight, and it attacks with its own attack points.
+ * Enemies cannot cast spells, and they are the only units that can be purified.
  *
  * @param name The name of the unit.
- * @param health The health points of the unit.
+ * @param initialHealth The maximum health points of the unit. The unit starts with this health.
  * @param attack The attack points of the enemy.
- * @param defense The defense points of the unit.
+ * @param initialDefense The defense points the unit starts with.
  * @param weight The weight of the unit.
  */
-class Enemy(name: String, health: Int, val attack: Int, defense: Int, weight: Int) extends AbstractUnit(name, health, defense, weight) with EnemiesContract {
+class Enemy(name: String, initialHealth: Int, val attack: Int, initialDefense: Int, weight: Int) extends AbstractUnit(name, initialHealth, initialDefense, weight) with EnemiesContract {
   override def maxActionBar: Double = weight
 
-  // Target: only enemies can be purified 
-  override def receivesPurify(source: Source): Boolean = false
+  override def attackDamage: Int = attack
+  override def magicDamage: Int = 0
+  
+  // Target, only enemies can be purified
+  override def receivesPurify(source: Source): Boolean = {
+    takeDamage((health * 0.15).toInt + source.magicDamage / 2)
+    true
+  }
 }
