@@ -1,4 +1,10 @@
 package cl.uchile.dcc
 package model.actions
 
-class ThrowSpell extends Action
+import model.{Source, Target}
+
+class ThrowSpell() extends Action {
+  override def id: String = "throwSpell"
+
+  override def doAction(source: Source, target: Target): Unit = ???
+}

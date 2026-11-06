@@ -1,4 +1,10 @@
 package cl.uchile.dcc
 package model.actions
 
-class ConsumePotion extends Action
+import model.{Source, Target}
+
+class ConsumePotion() extends Action {
+  override def id: String = "consumePotion"
+
+  override def doAction(source: Source, target: Target): Unit = ???
+}
