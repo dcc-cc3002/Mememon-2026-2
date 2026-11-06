@@ -12,7 +12,6 @@ abstract class MagiaOscura(nombre: String, ManaPoints:Int) extends Hechizo(nombr
 abstract class MagiaDeLuz(nombre:String, ManaPoints:Int) extends Hechizo(nombre, ManaPoints)
 
 
-
 abstract class AccionConUtilizables(override val nombre: String,val PosibleObjects : List[utilizable]) extends accion
 
 

@@ -18,3 +18,7 @@ class Panel(var x: Int, var y: Int):
     //si al final, la lista esta vacia, entonces, devolver la lista vacia, y
   def AddNeighbor(panel:Panel):Unit =
     NeighboringPanel +=panel
+
+  def addUnit(unidad:Unidad): Unit =
+    UnitsInPanel+=unidad
+    
