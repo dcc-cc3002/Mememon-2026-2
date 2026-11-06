@@ -1,5 +1,6 @@
 package cl.uchile.dcc
 package controller
+import cl.uchile.dcc.models._
 
 import munit.FunSuite
 import scala.compiletime.uninitialized
@@ -50,7 +51,7 @@ class TurnSchedulerTest extends FunSuite:
     scheduler.addUnit(knight)
     scheduler.addUnit(enemy)
 
-    // Bars should start at 0 
+    // Bars should start at 0
     assertEquals(scheduler.getCurrentActionBar(knight), 0.0)
     assertEquals(scheduler.getCurrentActionBar(enemy), 0.0)
 

@@ -1,65 +1,66 @@
-package cl.uchile.dcc
-package controller
+package cl.uchile.dcc.controller
 
+import cl.uchile.dcc.models._
 /**
-  * Controlador principal del juego.
-  * En esta clase debes implementar la lógica que conecta las distintas
-  * entidades de tu modelo, maneja los turnos, y ejecuta las acciones.
-  */
+ * Controlador principal del juego.
+ * En esta clase debes implementar la lógica que conecta las distintas
+ * entidades de tu modelo, maneja los turnos, y ejecuta las acciones.
+ */
 class GameController {
+  
+  // Instantiate the TurnScheduler
+  private val scheduler = new TurnScheduler()
 
+  // Store an Entity to perfectly match the scheduler's type.
+  // Using Option because at the start (or after a reset) no one is playing.
+  private var currentUnit: Option[Entity] = None
+
+  // 1. Get the unit currently playing its turn.
+  def getCurrentUnit: Option[Entity] = currentUnit
+
+  // 2. Decide which unit will play the next turn.
+  def nextTurn(): Unit =
+    // Use the exact method defined in the TurnScheduler
+    currentUnit = scheduler.getNextUnit
+
+    currentUnit match
+      case Some(unit) =>
+        // Reset its action bar because it's its turn to play
+        scheduler.resetActionBar(unit)
+      case None =>
+        // If no one is ready, advance the "time"
+        scheduler.increaseActionBars(1.0)
+        // Recursive call until someone is ready
+        nextTurn()
+
+  // 3. Get the available actions for a specific unit.
+  def getAvailableActions(unit: Entity): List[Action] =
+    unit match
+      // If the entity fulfills the Source contract (characters and enemies), return its actions
+      case source: Source => source.availableActions
+      case _ => List() // If not (e.g., an inanimate entity), it has no actions
+
+  // 4. Execute an action from a unit against a target.
+  def executeAction(actionId: String, target: Target): Unit =
+    currentUnit match
+      case Some(source: Source) => // Verify that the current unit can act (is a Source)
+        source.getAction(actionId) match
+          case Some(action) =>
+            // Triple Dispatch returns a boolean
+            val success = source.doAction(action, target)
+
+            // Only advance the turn if the action was successful
+            if success then
+              nextTurn()
+
+          case None => () // The action does not exist in its list
+      case _ => () // No active unit or it is not a Source
+
+  // 5. Reset the game state.
+  def resetGame(): Unit =
+    currentUnit = None
+  // Clean up the scheduler for a new battle
+  // scheduler.reset() // Implement this in TurnScheduler if not already present
+  // Add this inside GameController to delegate to the scheduler
+  def addUnit(unit: Entity): Unit = scheduler.addUnit(unit)
 }
-
-trait Entity:
-  def name: String
-  def hp: Int
-  def defense: Int
-  def weight: Int
-
-abstract class EntityAttributes(val name: String, var hp: Int, val defense: Int, val weight: Int) extends Entity
-
-abstract class AbsCharacter(name: String, hp: Int, defense: Int, weight: Int) extends EntityAttributes(name, hp, defense, weight):
-  var inventory: List[Potion] = List()
-  var equippedWeapon: Option[Weapon] = None
-
-abstract class AbsMagicianCharacter(name: String, hp: Int, defense: Int, weight: Int, var mana: Int) extends AbsCharacter(name, hp, defense, weight)
-
-class Enemy(name: String, hp: Int, defense: Int, weight: Int, val attack: Int) extends EntityAttributes(name, hp, defense, weight)
-
-class Knight(name: String, hp: Int, defense: Int, weight: Int) extends AbsCharacter(name, hp, defense, weight)
-class Archer(name: String, hp: Int, defense: Int, weight: Int) extends AbsCharacter(name, hp, defense, weight)
-class Thief(name: String, hp: Int, defense: Int, weight: Int) extends AbsCharacter(name, hp, defense, weight)
-
-class BlackMagician(name: String, hp: Int, defense: Int, weight: Int, mana: Int) extends AbsMagicianCharacter(name, hp, defense, weight, mana)
-class WhiteMagician(name: String, hp: Int, defense: Int, weight: Int, mana: Int) extends AbsMagicianCharacter(name, hp, defense, weight, mana)
-
-class Player(var playerUnits: List[AbsCharacter] = List()):
-  def isDefeated: Boolean =
-    playerUnits.forall(character => character.hp <= 0)
-
-trait Armament:
-  def weaponName: String
-  def attackPoints: Int
-  def weaponWeight: Int
-  def owner: AbsCharacter
-
-abstract class Weapon(val weaponName: String, var attackPoints: Int, val weaponWeight: Int, var owner: AbsCharacter) extends Armament
-
-abstract class MagicWeapon(weaponName: String, attackPoints: Int, weaponWeight: Int, owner: AbsCharacter, var magicPoints: Int) extends Weapon(weaponName, attackPoints, weaponWeight, owner)
-
-class Sword(weaponName: String, attackPoints: Int, weaponWeight: Int, owner: AbsCharacter) extends Weapon(weaponName, attackPoints, weaponWeight, owner)
-class Dagger(weaponName: String, attackPoints: Int, weaponWeight: Int, owner: AbsCharacter) extends Weapon(weaponName, attackPoints, weaponWeight, owner)
-class Bow(weaponName: String, attackPoints: Int, weaponWeight: Int, owner: AbsCharacter) extends Weapon(weaponName, attackPoints, weaponWeight, owner)
-
-class Wand(weaponName: String, attackPoints: Int, weaponWeight: Int, owner: AbsCharacter, magicPoints: Int) extends MagicWeapon(weaponName, attackPoints, weaponWeight, owner, magicPoints)
-class MagicStaff(weaponName: String, attackPoints: Int, weaponWeight: Int, owner: AbsCharacter, magicPoints: Int) extends MagicWeapon(weaponName, attackPoints, weaponWeight, owner, magicPoints)
-
-trait Effect:
-  def name: String
-
-abstract class Potion(val name: String) extends Effect
-
-class HealthPotion(name: String) extends Potion(name)
-class StrengthPotion(name: String) extends Potion(name)
-class ManaPotion(name: String) extends Potion(name)
-class MagicStrengthPotion(name: String) extends Potion(name)
