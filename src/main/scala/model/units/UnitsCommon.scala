@@ -1,8 +1,10 @@
 package cl.uchile.dcc
 package model.units
 
+import model.actions.{Source, Target}
+
 /** Contract shared by every unit of the game (characters and enemies). */
-trait UnitsCommon {
+trait UnitsCommon extends Source with Target {
   /** Returns the name of the unit. */
   def name: String
   /** Returns the health points of the unit. */
