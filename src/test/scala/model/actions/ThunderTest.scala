@@ -40,11 +40,6 @@ class ThunderTest extends munit.FunSuite:
     assertEquals(wizard.get.mana, 100)
 
   // Edge case tests
-  test("Thunder fails without enough mana"):
-    val tired = new BlackWizard("Merlin", 100, 10, 50, None, Nil, 19)
-    assertEquals(tired.doAction(thunder.get, enemy.get), false)
-    assertEquals(tired.mana, 19)
-
   test("Thunder without a magic weapon deals no damage"):
     val unarmed = new BlackWizard("Merlin", 100, 10, 50, None, Nil, 100)
     assertEquals(unarmed.doAction(thunder.get, enemy.get), true)

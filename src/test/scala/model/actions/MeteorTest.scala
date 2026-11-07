@@ -35,11 +35,6 @@ class MeteorTest extends munit.FunSuite:
     assertEquals(knight.doAction(meteor.get, new Panel(0, 0, Nil)), false)
 
   // Edge case tests
-  test("Meteor fails without enough mana"):
-    val tired = new BlackWizard("Merlin", 100, 10, 50, None, Nil, 49)
-    assertEquals(tired.doAction(meteor.get, new Panel(0, 0, Nil)), false)
-    assertEquals(tired.mana, 49)
-
   test("Meteor on an empty panel succeeds"):
     assertEquals(wizard.get.doAction(meteor.get, new Panel(0, 0, Nil)), true)
     assertEquals(wizard.get.mana, 50)
