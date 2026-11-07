@@ -13,7 +13,7 @@ class PanelTest extends munit.FunSuite:
   test("new panel, doesnt have units"):
     assert(panel.UnitsInPanel.isEmpty)
 
-  test("Un Panel puede contener unidades"):
+  test("Un Panel puede contener unidades"): 
     val caballero = new Caballero("A", 100, 15, 70)
     panel.addUnit(caballero)
     assert(panel.UnitsInPanel.head == caballero)

@@ -9,8 +9,9 @@ class Turnos:
   private val barras : mutable.Map[Unidad,Double] = mutable.Map()
 
   def agregarUnidad(unidad: Unidad): Unit =
-    unidades += unidad
-    barras(unidad) = 0.0
+    if !unidades.contains(unidad) then
+      unidades += unidad
+      barras(unidad) = 0.0
 
   def quitarUnidad(unidad: Unidad): Unit =
     unidades -= unidad
