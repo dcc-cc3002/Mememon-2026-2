@@ -77,3 +77,18 @@ class GameControllerTest extends munit.FunSuite:
   test("resetGame keeps the units in combat"):
     controller.get.resetGame()
     assertEquals(controller.get.units, List(knight.get, enemy.get))
+
+
+
+  // Tests for the errors of the actions
+  test("An action that throws an exception does not stop the game"):
+    controller.get.nextTurn()
+    enemy.get.takeDamage(100)
+    assertEquals(controller.get.executeAction(new Attack("Attack"), enemy.get), false)
+    assertEquals(controller.get.currentUnit, Some(knight.get))
+    assertEquals(controller.get.turnCount, 0)
+
+  test("There is no error after a successful action"):
+    controller.get.nextTurn()
+    controller.get.executeAction(new Attack("Attack"), enemy.get)
+    assertEquals(controller.get.lastError, None)
