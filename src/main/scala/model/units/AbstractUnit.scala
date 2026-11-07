@@ -64,8 +64,20 @@ abstract class AbstractUnit(val name: String, val maxHealth: Int, val initialDef
   
   override def actions: List[ActionContract] =
     List(new Attack("Attack"), new Move("Move"))
-  
-  
+
+
+  /** Checks that the unit is not defeated before it receives an action.
+   *
+   * @param actionName The name of the action, used in the error message.
+   * @throws InvalidActionException if the unit has no health points.
+   */
+  protected def checkNotDefeated(actionName: String): Unit = {
+    if (health <= 0) {
+      throw new InvalidActionException(s"$name cannot receive $actionName because it is defeated")
+    }
+  }
+
+
   // Source, entry point of the action system
   override def doAction(action: ActionContract, target: Target): Boolean = {
     if (health <= 0) {
@@ -91,11 +103,13 @@ abstract class AbstractUnit(val name: String, val maxHealth: Int, val initialDef
 
   // Target, actions every unit can receive
   override def receivesAttack(source: Source): Boolean = {
+    checkNotDefeated("Attack")
     takeDamage(source.attackDamage - defense)
     true
   }
 
   override def receivesThunder(source: Source): Boolean = {
+    checkNotDefeated("Thunder")
     takeDamage(source.magicDamage)
     true
   }

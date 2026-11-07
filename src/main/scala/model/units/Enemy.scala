@@ -22,6 +22,7 @@ class Enemy(name: String, initialHealth: Int, val attack: Int, initialDefense: I
   
   // Target, only enemies can be purified
   override def receivesPurify(source: Source): Boolean = {
+    checkNotDefeated("Purify")
     takeDamage((health * 0.15).toInt + source.magicDamage / 2)
     true
   }

@@ -31,7 +31,7 @@ abstract class AbstractCharacter(name: String, initialHealth: Int, initialDefens
   override def magicDamage: Int = weapon.map(_.magicAttack).getOrElse(0)
   override def maxActionBar: Double = weight + 0.5 * weapon.map(_.weight).getOrElse(0)
 
-  override def actions: List[ActionContract] = 
+  override def actions: List[ActionContract] =
     super.actions ++ List(new EquipWeapon("Equip weapon", Nil), new ConsumePotion("Consume potion", Nil))
 
   // Source, a character without a weapon cannot attack
@@ -47,6 +47,7 @@ abstract class AbstractCharacter(name: String, initialHealth: Int, initialDefens
 
   // Target, actions only characters can receive
   override def receivesEquipWeapon(source: Source, newWeapon: Weapon): Boolean = {
+    checkNotDefeated("Equip weapon")
     val isInInventory = inventory.contains(newWeapon)
     val isAllowed = newWeapon.isEquippableBy(this)
     if (isInInventory && isAllowed) {
@@ -64,6 +65,7 @@ abstract class AbstractCharacter(name: String, initialHealth: Int, initialDefens
 
   // Target, the potion must be in the inventory, and it is removed once consumed
   override def receivesConsumePotion(source: Source, potion: Potion): Boolean = {
+    checkNotDefeated("Consume potion")
     val isInInventory = inventory.contains(potion)
     if (isInInventory) {
       val hasEffect = potion.applyTo(this)
@@ -81,6 +83,7 @@ abstract class AbstractCharacter(name: String, initialHealth: Int, initialDefens
   }
 
   override def receivesHeal(source: Source): Boolean = {
+    checkNotDefeated("Heal")
     restoreHealth((maxHealth * 0.2).toInt + source.magicDamage / 4)
     true
   }
