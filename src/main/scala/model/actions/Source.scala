@@ -37,4 +37,7 @@ trait Source {
   def healTo(target: Target): Boolean
   /** Casts Purify on the target. Returns true if the action succeeds. */
   def purifyTo(target: Target): Boolean
+
+  /** Returns the actions this source can perform. */
+  def actions: List[ActionContract]
 }

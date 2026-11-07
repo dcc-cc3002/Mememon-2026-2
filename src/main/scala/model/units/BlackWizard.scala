@@ -1,7 +1,7 @@
 package cl.uchile.dcc
 package model.units
 
-import model.actions.Target
+import model.actions.{ActionContract, Meteor, Thunder, Target}
 import model.usable.{Weapon, usableCommon}
 
 /** A black wizard, a magic character.
@@ -40,5 +40,9 @@ Int, weapon: Option[Weapon], utilities: List[usableCommon], mana: Int) extends A
   override def canEquipDagger: Boolean = true
   override def canEquipWand: Boolean = true
   override def canEquipStaff: Boolean = true
+
+
+  override def actions: List[ActionContract] =
+    super.actions ++ List(new Thunder("Thunder"), new Meteor("Meteor"))
 }
 

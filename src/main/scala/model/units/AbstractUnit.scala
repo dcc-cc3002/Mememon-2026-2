@@ -1,7 +1,7 @@
 package cl.uchile.dcc
 package model.units
 
-import model.actions.{ActionContract, Source, Target}
+import model.actions.{ActionContract, Attack, Move, Source, Target}
 import model.usable.{Potion, Weapon}
 
 /** Base class that stores the properties shared by all units.
@@ -60,6 +60,11 @@ abstract class AbstractUnit(val name: String, val maxHealth: Int, val initialDef
   protected def changeDefense(newDefense: Int): Unit =
     currentDefense = newDefense
 
+  
+  override def actions: List[ActionContract] =
+    List(new Attack("Attack"), new Move("Move"))
+  
+  
   // Source, entry point of the action system
   override def doAction(action: ActionContract, target: Target): Boolean =
     action.execute(this, target)

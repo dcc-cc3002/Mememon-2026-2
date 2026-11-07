@@ -1,7 +1,7 @@
 package cl.uchile.dcc
 package model.units
 
-import model.actions.Target
+import model.actions.{ActionContract, Heal, Purify, Target}
 import model.usable.{Weapon, usableCommon}
 
 /** A white wizard, a magic character that can cast Heal and Purify.
@@ -42,6 +42,9 @@ Int, weapon: Option[Weapon], utilities: List[usableCommon], mana: Int) extends A
   override def canEquipBow: Boolean = true
   override def canEquipWand: Boolean = true
   override def canEquipStaff: Boolean = true
+
+  override def actions: List[ActionContract] =
+    super.actions ++ List(new Heal("Heal"), new Purify("Purify"))
 }
 
 

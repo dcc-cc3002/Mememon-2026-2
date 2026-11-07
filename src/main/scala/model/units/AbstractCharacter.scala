@@ -1,7 +1,8 @@
 package cl.uchile.dcc
 package model.units
 
-import model.actions.{Source, Target}
+import model.actions.{ActionContract, ConsumePotion, EquipWeapon, Source, Target}
+
 import model.usable.{Potion, Weapon, usableCommon}
 
 /** Base class for all characters.
@@ -29,6 +30,9 @@ abstract class AbstractCharacter(name: String, initialHealth: Int, initialDefens
   override def attackDamage: Int = weapon.map(_.attack).getOrElse(0)
   override def magicDamage: Int = weapon.map(_.magicAttack).getOrElse(0)
   override def maxActionBar: Double = weight + 0.5 * weapon.map(_.weight).getOrElse(0)
+
+  override def actions: List[ActionContract] = 
+    super.actions ++ List(new EquipWeapon("Equip weapon", Nil), new ConsumePotion("Consume potion", Nil))
 
   // Source, a character without a weapon cannot attack
   override def attackTo(target: Target): Boolean =
