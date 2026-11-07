@@ -3,6 +3,7 @@ package model.actions
 
 import model.panels.{Panel, PanelsList}
 import model.units.{Enemy, Knight}
+import model.exceptions.InvalidActionException
 
 class MoveTest extends munit.FunSuite:
   var move: Option[ActionContract] = None
@@ -31,24 +32,45 @@ class MoveTest extends munit.FunSuite:
     assertEquals(destination.units, List(enemy))
     assertEquals(start.units, Nil)
 
+
   test("A unit cannot move to a panel that is not adjacent"):
     val farPanel = new Panel(2, 2, Nil)
-    assertEquals(knight.get.doAction(move.get, farPanel), false)
+    var exceptionThrown = false
+    try {
+      knight.get.doAction(move.get, farPanel)
+    } catch {
+      case e: InvalidActionException => exceptionThrown = true
+    }
+    assertEquals(exceptionThrown, true)
     assertEquals(farPanel.units, Nil)
     assertEquals(origin.get.units, List(knight.get))
+
 
   test("A unit cannot move to another unit"):
     val enemy = new Enemy("Goblin", 100, 25, 10, 40)
     assertEquals(knight.get.doAction(move.get, enemy), false)
 
+
   // Edge case tests
   test("A unit that is not on any panel cannot move"):
     val outsider = new Knight("Pedro", 100, 10, 50, None, Nil)
     val destination = new Panel(1, 0, Nil)
-    assertEquals(outsider.doAction(move.get, destination), false)
+    var exceptionThrown = false
+    try {
+      outsider.doAction(move.get, destination)
+    } catch {
+      case e: InvalidActionException => exceptionThrown = true
+    }
+    assertEquals(exceptionThrown, true)
     assertEquals(destination.units, Nil)
 
-  test("A unit cannot move to the panel where it already is"):
-    assertEquals(knight.get.doAction(move.get, origin.get), false)
-    assertEquals(origin.get.units, List(knight.get))
 
+  test("A unit cannot move to the panel where it already is"):
+    var exceptionThrown = false
+    try {
+      knight.get.doAction(move.get, origin.get)
+    } catch {
+      case e: InvalidActionException => exceptionThrown = true
+    }
+    assertEquals(exceptionThrown, true)
+    assertEquals(origin.get.units, List(knight.get))
