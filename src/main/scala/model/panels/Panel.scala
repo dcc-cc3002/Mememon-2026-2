@@ -4,6 +4,7 @@ package model.panels
 import model.actions.Source
 import model.units.UnitsCommon
 import model.usable.{Potion, Weapon}
+import model.exceptions.InvalidActionException
 
 /** Every panel created so far, used to find adjacent panels. */
 var PanelsList: List[Panel] = Nil
@@ -50,7 +51,7 @@ class Panel(val x: Int, val y: Int, val initialUnits: List[UnitsCommon]) extends
       true
     } 
     else {
-      false
+      throw new InvalidActionException(s"The unit ${unit.name} is unable to move to panel ($x, $y) since that panel is not adjacent")
     }
 
   // Target, Meteor damages every unit in the panel
