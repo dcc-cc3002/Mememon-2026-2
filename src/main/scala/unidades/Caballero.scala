@@ -1,4 +1,5 @@
 package unidades
+import utilizables.Arma
 
 //esto es una ramifiacion mas profunda por eso ocupamos
 
@@ -11,4 +12,5 @@ package unidades
 //  var inventarioUtilizables: utilizables = mutable.ListBuffer[armamento]()
 
 
-class Caballero(nombre: String,HpPoints: Int,DefensePoints: Int,weight: Int) extends Personajes(nombre, HpPoints, DefensePoints, weight)
+class Caballero(nombre: String,HpPoints: Int,DefensePoints: Int,weight: Int) extends Personajes(nombre, HpPoints, DefensePoints, weight):
+  override def puedeEquipar(arma: Arma): Boolean = arma.equipablePorCaballero

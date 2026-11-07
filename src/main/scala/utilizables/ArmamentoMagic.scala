@@ -7,4 +7,6 @@ weight: Double,owner: Personajes,var AttackPointsM: Int) extends Arma(nombre, At
   override def equals(obj: Any): Boolean =
     super.equals(obj) &&
       AttackPointsM == obj.asInstanceOf[ArmaMagic].AttackPointsM
+
+  override def ataqueMagico: Int = AttackPointsM
   

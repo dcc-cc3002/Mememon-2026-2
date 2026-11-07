@@ -1,4 +1,7 @@
 package  unidades
+
+import acciones.{Source, Target}
+import mapajuego.Panel
 //T esta tiene el mismo-ish nombre que el nombre de carpeta, por lo que de aqui sale
 //T todo el resto,
 //T dealmente como de aqui va a salir todo lo demas, es muy,general para ser ocupado  entonces tiene que ser trait
@@ -10,11 +13,12 @@ package  unidades
 
 
 //notar que unidad igual a nombre de file, pero esto es solo convencion
-trait Unidad:
+trait Unidad extends Source, Target:
   val nombre:String
   var HpPoints: Int
   var DefensePoints: Int
   var weight:Double
-
+  var panelActual: Option[Panel]
   def BarraAccion : Double
 
+  def recibirDanioMagico(danio: Int): Unit
