@@ -4,6 +4,7 @@ package controller
 import model.actions.{ActionContract, Target}
 import model.combat.{TurnScheduler, TurnSchedulerContract}
 import model.units.UnitsCommon
+import model.exceptions.InvalidActionException
 
 /** Main controller of the game.
  *
@@ -18,6 +19,8 @@ class GameController {
   private val scheduler: TurnSchedulerContract = new TurnScheduler
   private var nowUnit: Option[UnitsCommon] = None
   private var turns: Int = 0
+
+  private var errorMessage: Option[String] = None
 
   /** Adds a unit to the combat, with its action bar in 0. Does nothing if it is already there.
    *
@@ -74,23 +77,36 @@ class GameController {
   /** Executes an action of the current unit on a target.
    *
    * If the action succeeds, the action bar of the unit is reset and the turn ends.
-   * If it fails, the turn does not change.
+   * If it fails, the turn does not change. When the action fails because one of its
+   * restrictions is not met, the error is caught, printed in the console and saved,
+   * so it can be read with lastError.
    *
    * @param action The action to execute.
    * @param target The entity that receives the action.
    * @return True if the action was executed successfully, false otherwise.
    */
   def executeAction(action: ActionContract, target: Target): Boolean = {
-    if (nowUnit.isDefined && nowUnit.get.doAction(action, target)) {
-      scheduler.reset(nowUnit.get)
-      nowUnit = None
-      turns += 1
-      true
-    }
-    else {
-      false
+    errorMessage = None
+    try {
+      if (nowUnit.isDefined && nowUnit.get.doAction(action, target)) {
+        scheduler.reset(nowUnit.get)
+        nowUnit = None
+        turns += 1
+        true
+      }
+      else {
+        false
+      }
+    } catch {
+      case e: InvalidActionException => println(e.getMessage)
+        errorMessage = Some(e.getMessage)
+        false
     }
   }
+
+  /** Returns the message of the error of the last action executed, or None if it did not throw an error. */
+  def lastError: Option[String] =
+    errorMessage
 
   /** Resets the state of the game: every action bar goes back to 0, no unit has the turn,
    * and the turn count goes back to 0. The units stay in combat.
