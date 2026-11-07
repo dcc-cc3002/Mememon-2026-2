@@ -3,6 +3,7 @@ package model.units
 
 import model.actions.{ActionContract, Attack, Move, Source, Target}
 import model.usable.{Potion, Weapon}
+import model.exceptions.InvalidActionException
 
 /** Base class that stores the properties shared by all units.
  *
@@ -66,8 +67,12 @@ abstract class AbstractUnit(val name: String, val maxHealth: Int, val initialDef
   
   
   // Source, entry point of the action system
-  override def doAction(action: ActionContract, target: Target): Boolean =
+  override def doAction(action: ActionContract, target: Target): Boolean = {
+    if (health <= 0) {
+      throw new InvalidActionException(s"$name is unable to perform ${action.name} since it has no health points")
+    }
     action.execute(this, target)
+  }
 
   override def attackTo(target: Target): Boolean =
     target.receivesAttack(this)
