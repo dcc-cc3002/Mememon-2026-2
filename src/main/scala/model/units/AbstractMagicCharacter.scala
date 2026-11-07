@@ -3,6 +3,8 @@ package model.units
 
 import model.usable.{Weapon, usableCommon}
 
+import model.exceptions.InvalidActionException
+
 /** Base class for characters that can use magic.
  *
  * Casting a spell spends mana only if the spell succeeds. A magic strength potion
@@ -33,12 +35,17 @@ abstract class AbstractMagicCharacter(name: String, initialHealth: Int, initialD
     }
   }
 
-  /** Returns true if the character has at least the given amount of mana.
+  /** Checks that the character has enough mana to cast a spell.
    *
    * @param cost The mana cost of the spell.
+   * @param spellName The name of the spell, used in the error message.
+   * @throws InvalidActionException if the character has less mana than the cost.
    */
-  protected def hasEnoughMana(cost: Int): Boolean =
-    currentMana >= cost
+  protected def checkEnoughMana(cost: Int, spellName: String): Unit = {
+    if (currentMana < cost) {
+      throw new InvalidActionException(s"$name is unable to cast $spellName since it only has $currentMana mana points and requireds $cost")
+    }
+  }
 
   /** Spends the mana of a spell that was cast successfully, and ends the magic strength effect.
    *

@@ -19,23 +19,27 @@ Int, weapon: Option[Weapon], utilities: List[usableCommon], mana: Int) extends A
   private val thunderCost: Int = 20
   private val meteorCost: Int = 50
 
-  override def thunderTo(target: Target): Boolean =
-    if (hasEnoughMana(thunderCost) && target.receivesThunder(this)) {
+  override def thunderTo(target: Target): Boolean = {
+    checkEnoughMana(thunderCost, "Thunder")
+    if (target.receivesThunder(this)) {
       spendMana(thunderCost)
       true
     }
     else {
       false
     }
+  }
 
-  override def meteorTo(target: Target): Boolean =
-    if (hasEnoughMana(meteorCost) && target.receivesMeteor(this)) {
+  override def meteorTo(target: Target): Boolean = {
+    checkEnoughMana(meteorCost, "Meteor")
+    if (target.receivesMeteor(this)) {
       spendMana(meteorCost)
       true
     }
     else {
       false
     }
+  }
 
   override def canEquipDagger: Boolean = true
   override def canEquipWand: Boolean = true

@@ -21,23 +21,27 @@ Int, weapon: Option[Weapon], utilities: List[usableCommon], mana: Int) extends A
   private val healCost: Int = 15
   private val purifyCost: Int = 25
 
-  override def healTo(target: Target): Boolean =
-    if (hasEnoughMana(healCost) && target.receivesHeal(this)) {
+  override def healTo(target: Target): Boolean = {
+    checkEnoughMana(healCost, "Heal")
+    if (target.receivesHeal(this)) {
       spendMana(healCost)
       true
-    } 
+    }
     else {
       false
     }
+  }
 
-  override def purifyTo(target: Target): Boolean =
-    if (hasEnoughMana(purifyCost) && target.receivesPurify(this)) {
+  override def purifyTo(target: Target): Boolean = {
+    checkEnoughMana(purifyCost, "Purify")
+    if (target.receivesPurify(this)) {
       spendMana(purifyCost)
       true
     }
     else {
       false
     }
+  }
 
   override def canEquipBow: Boolean = true
   override def canEquipWand: Boolean = true
