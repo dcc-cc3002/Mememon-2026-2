@@ -10,7 +10,6 @@ class GameControllerTest extends munit.FunSuite:
   var knight: Option[Knight] = None
   var enemy: Option[Enemy] = None
 
-  // The knight fills its action bar before the enemy, so it plays the first turn
   override def beforeEach(context: BeforeEach): Unit = {
     controller = Some(new GameController())
     knight = Some(new Knight("Juan", 100, 10, 10, Some(new Sword("Sword", 30, 10, None)), Nil))
