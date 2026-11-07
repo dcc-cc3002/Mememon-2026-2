@@ -62,7 +62,6 @@ class TurnScheduler extends TurnSchedulerContract {
       if statusActionBar(unit) then
         var position = 0
 
-        // Find the position where the new unit goes, keeping the list sorted from highest to lowest excess
         while (position < result.length && excedent(result(position)) >= excedent(unit)) {
           position+=1
         }
