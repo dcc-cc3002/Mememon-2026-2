@@ -31,3 +31,11 @@ El trabajo a lo largo del semestre será evaluado principalmente en base a los s
 1. Lean detenidamente el enunciado principal del proyecto.
 2. Exploren este código base. Encontrarán una clase inicial `GameController` en el paquete `controller` desde la cual podrán comenzar a articular su lógica.
 3. Asegúrense de usar herramientas de control de versiones (Git) de manera constante, documentando adecuadamente sus avances mediante *commits*.
+
+# Entrega Final 2
+En esta parte del README comento algunas decisiones respecto al diseño.
+
+## Sobre clases, traits y atributos
+- Atributos numéricos fueron declarados como Double, ya que como ciertas acciones dependen de porcentajes de ciertos parámetros (como uso de pociones) serían más sencillos de calcular.
+- Se crearon los atributos de valores máximos de vida y mana de personajes para acciones que dependen de estos valores, que influirán en los que actualmente poseerán los personajes.
+- Se crearon traits para las unidades del juego que comparten atributos (nombre, puntos de vida, defensa y peso) con tal de poder extenderlos a sus atributos propios según corresponda (por ejemplo, otorgar a los enemigos puntos de ataque, otorgar a personajes un inventario)
